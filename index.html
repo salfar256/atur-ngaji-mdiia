@@ -520,7 +520,8 @@
     <section class="page" id="page-tempat">
       <p class="eyebrow h-eye">Tempat ngaji</p>
       <h1 class="h-title">Tentukan tempat per kelas</h1>
-      <p class="h-sub">Ketuk sesi yang sudah ada pelajarannya untuk memilih tempat. Satu tempat tak bisa dipakai dua kelas berbeda di jam yang sama, kecuali kelas-kelas <b>ngaji bandongan</b> (digabung satu ustadz).</p><p class="dnd-hint">Tekan lalu geser kotak tempat untuk memindahkan atau menukar tempat.</p>
+      <p class="h-sub">Ketuk sesi yang sudah ada pelajarannya untuk memilih tempat.</p>
+      <p class="dnd-hint">Tekan lalu geser kotak tempat untuk memindahkan atau menukar tempat.</p>
       <div id="tempatBanner"></div>
       <div class="print-only" id="tempatPrintTitle"></div>
       <div class="tabs" id="tempatTabs"></div>
@@ -1576,6 +1577,7 @@ function renderTempatGrid(){
       html += '<td><button class="cell '+cls+(st==='conflict'?' bentrok':'')+'" data-dnd="tempat" data-k="'+curTempatKelas+'" data-h="'+h+'" data-s="'+s.id+'">'
         + '<span class="tpn">'+(t?t.nama:'+ tempat')+'</span>'
         + '<span class="tpsub">'+(p?p.nama:'?')+(u?(' \u00b7 '+u.nama):'')+'</span>'
+        + (e.bandongan?'<span class="bandtag">Bandongan</span>':'')
         + '</button></td>';
     }
     html += '</tr>';
