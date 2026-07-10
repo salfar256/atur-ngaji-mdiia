@@ -1764,10 +1764,12 @@ function renderUstadzWeek(){
     for(const sid of slotIds){
       const grp = bySlot[sid]; const s = slotById(sid); const p = pelById(grp[0].pelajaranId);
       const kelasList = grp.map(x=>x.kelas).join(' + ');
+      const tempatList = [...new Set(grp.map(x=>{ const t=x.tempatId?tempById(x.tempatId):null; return t?t.nama:null; }).filter(Boolean))].join(', ');
       const band = grp.length>1;
       sesiCount += 1;
       html += '<div class="urow"><span class="t">'+(s?s.mulai:'')+'</span><div class="meta"><div class="p">'+(p?p.nama:'?')
-        + (band?' <span class="bandtag">bandongan</span>':'') + '</div><div class="k">'+kelasList+' \u00b7 '+(s?s.nama:'')+'</div></div></div>';
+        + (band?' <span class="bandtag">bandongan</span>':'') + '</div><div class="k">'+kelasList+' \u00b7 '+(s?s.nama:'')
+        + (tempatList?(' \u00b7 \ud83d\udccd '+tempatList):'') + '</div></div></div>';
     }
     html += '</div>';
   }
@@ -2689,11 +2691,11 @@ function sheetForUstadz(uid){
   const mine = state.jadwal.filter(e=>e.ustadzId===uid);
   const tanggal = new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   const col = u ? PALETTE[u.c % PALETTE.length] : PALETTE[0];
-  const ncol = 6;
+  const ncol = 7;
   const aoa = [];
   aoa.push(['JADWAL MENGAJAR — ' + (u ? u.nama.toUpperCase() : '')]);
   aoa.push(['Diperbarui ' + tanggal]);
-  aoa.push(['Hari','Waktu','Sesi','Pelajaran','Kelas','Keterangan']);
+  aoa.push(['Hari','Waktu','Sesi','Pelajaran','Kelas','Tempat','Keterangan']);
   let sesiCount = 0;
   for(const h of state.hari){
     const day = mine.filter(e=>e.hari===h);
@@ -2707,16 +2709,17 @@ function sheetForUstadz(uid){
       const s = slotById(sid);
       const p = pelById(grp[0].pelajaranId);
       const kelasList = grp.map(x=>x.kelas).join(', ');
+      const tempatList = [...new Set(grp.map(x=>{ const t=x.tempatId?tempById(x.tempatId):null; return t?t.nama:null; }).filter(Boolean))].join(', ');
       const band = grp.length > 1;
       const waktu = s ? ((s.mulai||'') + (s.selesai ? '–'+s.selesai : '')) : '';
-      aoa.push([firstInDay ? h : '', waktu, s ? s.nama : '', p ? p.nama : '', kelasList, band ? '• Bandongan' : '']);
+      aoa.push([firstInDay ? h : '', waktu, s ? s.nama : '', p ? p.nama : '', kelasList, tempatList || '—', band ? '• Bandongan' : '']);
       firstInDay = false;
       sesiCount++;
     }
   }
-  if(sesiCount===0) aoa.push(['—','','','Belum ada jadwal','','']);
-  aoa.push(['','','','','','']);
-  aoa.push(['Total: ' + sesiCount + ' sesi mengajar dalam sepekan','','','','','']);
+  if(sesiCount===0) aoa.push(['—','','','Belum ada jadwal','','','']);
+  aoa.push(['','','','','','','']);
+  aoa.push(['Total: ' + sesiCount + ' sesi mengajar dalam sepekan','','','','','','']);
 
   const ws = XLSX.utils.aoa_to_sheet(aoa);
   const nrows = aoa.length;
@@ -2725,7 +2728,7 @@ function sheetForUstadz(uid){
     {s:{r:1,c:0},e:{r:1,c:ncol-1}},
     {s:{r:nrows-1,c:0},e:{r:nrows-1,c:ncol-1}},
   ];
-  ws['!cols'] = [{wch:13},{wch:14},{wch:16},{wch:20},{wch:22},{wch:14}];
+  ws['!cols'] = [{wch:13},{wch:14},{wch:16},{wch:20},{wch:20},{wch:18},{wch:14}];
   ws['!rows'] = [{hpt:30},{hpt:14},{hpt:18}];
   const thin = {style:'thin',color:{rgb:argb('#D8D2C3')}};
   const border = {top:thin,bottom:thin,left:thin,right:thin};
@@ -2747,7 +2750,8 @@ function sheetForUstadz(uid){
     setStyle(ws,i,2,{font:{sz:10},fill:{patternType:'solid',fgColor:{rgb:argb(dataBg)}},alignment:{horizontal:'center',vertical:'center'},border});
     setStyle(ws,i,3,{font:{sz:10,bold:true,color:{rgb:argb(col.ink)}},fill:{patternType:'solid',fgColor:{rgb:argb(col.bg)}},alignment:{horizontal:'left',vertical:'center'},border});
     setStyle(ws,i,4,{font:{sz:10},fill:{patternType:'solid',fgColor:{rgb:argb(col.bg)}},alignment:{horizontal:'left',vertical:'center'},border});
-    setStyle(ws,i,5,{font:{sz:9,italic:true,color:{rgb:argb('#B45309')}},fill:{patternType:'solid',fgColor:{rgb:argb('#FFFBF5')}},alignment:{horizontal:'center',vertical:'center'},border});
+    setStyle(ws,i,5,{font:{sz:10,color:{rgb:argb('#14532D')}},fill:{patternType:'solid',fgColor:{rgb:argb(dataBg)}},alignment:{horizontal:'left',vertical:'center',wrapText:true},border});
+    setStyle(ws,i,6,{font:{sz:9,italic:true,color:{rgb:argb('#B45309')}},fill:{patternType:'solid',fgColor:{rgb:argb('#FFFBF5')}},alignment:{horizontal:'center',vertical:'center'},border});
   }
   // baris total
   setStyle(ws,nrows-1,0,{font:{bold:true,sz:10,italic:true,color:{rgb:argb('#14532D')}},alignment:{horizontal:'left',vertical:'center'}});
