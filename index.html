@@ -3,7 +3,16 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Web Jadwal Ngaji dan Nilai</title>
+<title>Atur Ngaji MDIIA</title>
+<meta name="description" content="Atur Ngaji MDIIA — jadwal ngaji, nilai & rapor, dan data kartu santri." />
+<meta name="theme-color" content="#14532D" />
+<link rel="manifest" href="./manifest.json" />
+<link rel="icon" href="./icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="./icon.svg" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Atur Ngaji MDIIA" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -430,6 +439,116 @@
   .rk-cnt{flex:none; font-size:11px; font-weight:700; color:var(--ink); background:#F0F3EE; border-radius:8px; padding:4px 9px; margin-top:1px; white-space:nowrap;}
   .listsurface2{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); box-shadow:var(--shadow); padding:6px 14px 10px;}
 
+  /* ============ LOGIN / AUTENTIKASI ============ */
+  .auth{position:fixed; inset:0; z-index:200; background:linear-gradient(170deg,#14532D 0%,#0F3D22 46%,#0B2E1A 100%); display:flex; flex-direction:column; overflow-y:auto; padding:calc(26px + env(safe-area-inset-top)) 18px calc(26px + env(safe-area-inset-bottom));}
+  .auth.hidden{display:none;}
+  .auth-in{width:100%; max-width:400px; margin:auto;}
+  .auth-brand{text-align:center; color:#fff; margin-bottom:22px;}
+  .auth-logo{width:74px; height:74px; margin:0 auto 14px; border-radius:22px; background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.2); display:grid; place-items:center;}
+  .auth-logo svg{width:38px; height:38px; color:#fff;}
+  .auth-brand h1{font-family:'Fraunces',serif; font-weight:600; font-size:26px; margin:0 0 5px; letter-spacing:-.01em;}
+  .auth-brand p{margin:0; font-size:12.5px; opacity:.78; line-height:1.5;}
+  .auth-card{background:var(--surface); border-radius:20px; padding:22px 20px; box-shadow:0 18px 44px rgba(0,0,0,.28);}
+  .auth-card h2{font-family:'Fraunces',serif; font-weight:600; font-size:19px; margin:0 0 3px; color:var(--ink);}
+  .auth-card .sub{font-size:12.5px; color:var(--muted); margin:0 0 16px;}
+  .auth-f{margin-bottom:11px;}
+  .auth-f span{display:block; font-size:11.5px; font-weight:700; color:var(--muted); letter-spacing:.05em; text-transform:uppercase; margin:0 2px 6px;}
+  .auth-f .wrap{position:relative; display:flex; align-items:center;}
+  .auth-f input{width:100%; padding:13px 14px; border:1px solid var(--line-strong); border-radius:12px; background:#FCFBF8; color:var(--text); font-weight:600; font-size:16px;}
+  .auth-f input:focus{outline:none; border-color:var(--ink); background:#fff;}
+  .auth-eye{position:absolute; right:6px; padding:9px 10px; border-radius:9px; color:var(--muted); font-size:11.5px; font-weight:700;}
+  .auth-eye:hover{background:#F0F3EE; color:var(--ink);}
+  .auth-btn{width:100%; padding:14px; border-radius:12px; background:var(--ink); color:#fff; font-weight:700; font-size:15px; margin-top:6px; display:flex; align-items:center; justify-content:center; gap:9px;}
+  .auth-btn:disabled{opacity:.6;}
+  .auth-btn .spin{width:15px; height:15px; border:2px solid rgba(255,255,255,.35); border-top-color:#fff; border-radius:99px; animation:aspin .7s linear infinite; display:none;}
+  .auth-btn.busy .spin{display:block;}
+  @keyframes aspin{to{transform:rotate(360deg);}}
+  .auth-sub{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:12px;}
+  .auth-link{font-size:12.5px; font-weight:600; color:var(--ink); text-decoration:underline; text-underline-offset:3px;}
+  .auth-msg{display:none; margin-top:13px; padding:11px 13px; border-radius:11px; font-size:12.5px; font-weight:600; line-height:1.45;}
+  .auth-msg.show{display:block;}
+  .auth-msg.err{background:var(--bentrok-bg); color:#7F1D1D;}
+  .auth-msg.ok{background:#EAF6EE; color:#15803D;}
+  .auth-msg.info{background:#F0F3EE; color:var(--ink-soft);}
+  .auth-inst{margin-top:14px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.18); border-radius:16px; padding:15px 16px; color:#fff;}
+  .auth-inst b{display:block; font-size:13.5px; margin-bottom:3px;}
+  .auth-inst p{margin:0; font-size:12px; opacity:.8; line-height:1.5;}
+  .auth-inst button{margin-top:11px; width:100%; padding:12px; border-radius:11px; background:#fff; color:var(--ink); font-weight:700; font-size:13.5px; display:flex; align-items:center; justify-content:center; gap:8px;}
+  .auth-inst button svg{width:16px; height:16px;}
+  .auth-foot{text-align:center; color:rgba(255,255,255,.6); font-size:11px; margin-top:18px; line-height:1.6;}
+  .auth-offline{margin-top:11px; width:100%; padding:12px; border-radius:11px; border:1px solid var(--line-strong); color:var(--muted); font-weight:700; font-size:13px; display:none;}
+  .auth-offline.show{display:block;}
+
+  /* topbar akun */
+  .topbar .act.acct{padding:7px 9px;}
+  .topbar .act.acct svg{width:16px; height:16px;}
+  .acct-menu{position:fixed; z-index:120; right:12px; top:calc(58px + env(safe-area-inset-top)); width:250px; background:var(--surface); border:1px solid var(--line); border-radius:16px; box-shadow:0 16px 40px rgba(20,40,25,.18); padding:8px; display:none;}
+  .acct-menu.show{display:block;}
+  .acct-who{padding:10px 11px 12px; border-bottom:1px solid var(--line); margin-bottom:6px;}
+  .acct-who b{display:block; font-size:13px; color:var(--text); word-break:break-all;}
+  .acct-who small{font-size:11px; color:var(--muted);}
+  .acct-menu button{width:100%; text-align:left; padding:11px 12px; border-radius:11px; font-size:13.5px; font-weight:600; color:var(--text); display:flex; align-items:center; gap:10px;}
+  .acct-menu button svg{width:16px; height:16px; color:var(--muted);}
+  .acct-menu button:hover{background:#F0F3EE;}
+  .acct-menu button.danger{color:#B91C1C;} .acct-menu button.danger svg{color:#B91C1C;}
+
+  /* ============ KARTU SANTRI ============ */
+  .kstat{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:12px;}
+  .kstat .box{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:10px 11px; box-shadow:var(--shadow);}
+  .kstat .box .v{font-family:'Fraunces',serif; font-size:20px; font-weight:600; color:var(--ink); line-height:1.1;}
+  .kstat .box .l{font-size:10.5px; color:var(--muted); font-weight:600; margin-top:2px;}
+  .kstat .box.warn .v{color:#B45309;} .kstat .box.bad .v{color:#B91C1C;}
+  .orphan-box{border:1px solid var(--line-strong); border-radius:12px; background:#FCFBF8; padding:11px 13px; margin-bottom:11px; font-size:12.5px; line-height:1.55; color:var(--text);}
+  .orphan-box.clean{background:#EAF6EE; border-color:#BFE3CB; color:#15803D; font-weight:600;}
+  .orphan-box.dirty{background:#FBF1E5; border-color:#E7C89A; color:#92400E;}
+  .orphan-box ul{margin:6px 0 0; padding-left:18px;}
+  .orphan-box li{margin:2px 0;}
+  .orphan-box b{font-weight:700;}
+  .kfilter{width:100%; padding:11px 13px; border:1px solid var(--line-strong); border-radius:11px; background:var(--surface); color:var(--text); font-weight:600; margin-bottom:10px;}
+  .kitem{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:12px 13px 11px; margin-bottom:9px; box-shadow:var(--shadow);}
+  .kitem.lost{border-color:#F0B4B4; background:#FEFAFA;}
+  .ki-top{display:flex; align-items:flex-start; gap:10px;}
+  .ki-id{flex:1; min-width:0;}
+  .ki-id .nm{font-weight:700; font-size:14px; color:var(--text); line-height:1.3;}
+  .ki-id .mt{font-size:11.5px; color:var(--muted); margin-top:2px; display:flex; flex-wrap:wrap; gap:5px 8px; align-items:center;}
+  .nistag{font-family:ui-monospace,monospace; font-size:11px; font-weight:700; color:var(--ink); background:#EAF3EC; border-radius:6px; padding:2px 6px;}
+  .nistag.none{color:#B45309; background:#FBF1E5;}
+  .ki-print{flex:none; padding:8px 11px; border-radius:10px; background:#F0F3EE; color:var(--ink); font-weight:700; font-size:12px; display:flex; align-items:center; gap:6px;}
+  .ki-print svg{width:14px; height:14px;}
+  .ki-print:hover{background:var(--ink); color:#fff;}
+  .ki-tags{display:flex; flex-wrap:wrap; gap:7px; margin-top:10px;}
+  .ktog{padding:8px 11px; border-radius:999px; border:1px solid var(--line-strong); background:var(--paper); color:var(--muted); font-size:12px; font-weight:600; display:flex; align-items:center; gap:6px;}
+  .ktog .bx{width:14px; height:14px; border-radius:5px; border:1.6px solid currentColor; display:grid; place-items:center; font-size:9px; line-height:1;}
+  .ktog.on{background:#EAF3EC; border-color:var(--ink); color:var(--ink);}
+  .ktog.on.k-hilang{background:var(--bentrok-bg); border-color:#B91C1C; color:#B91C1C;}
+  .ki-note{width:100%; margin-top:9px; padding:10px 12px; border:1px solid var(--line-strong); border-radius:10px; background:#FCFBF8; font-size:13px; color:var(--text);}
+  .ki-note:focus{outline:none; border-color:var(--ink); background:#fff;}
+  .ki-note.filled{background:#FBF1E5; border-color:#E7C89A;}
+
+  /* ============ OVERLAY KARTU (cetak) ============ */
+  .kartu-overlay{position:fixed; inset:0; z-index:70; background:var(--paper); display:none; flex-direction:column;}
+  .kartu-overlay.show{display:flex;}
+  .kartu-scroll{flex:1; overflow-y:auto; padding:16px; background:#E7E3D9; display:flex; flex-direction:column; align-items:center; gap:14px;}
+  .kcard{width:85.6mm; height:54mm; background:#fff; border-radius:3.2mm; box-shadow:0 4px 18px rgba(0,0,0,.16); overflow:hidden; display:flex; flex-direction:column; color:#111; position:relative;}
+  .kcard .kc-top{background:#14532D; color:#fff; padding:2.4mm 3.4mm 2mm; display:flex; align-items:center; gap:2.4mm;}
+  .kcard .kc-top .kc-mk{width:6.6mm; height:6.6mm; border-radius:1.8mm; background:rgba(255,255,255,.16); display:grid; place-items:center; flex:none;}
+  .kcard .kc-top .kc-mk svg{width:4mm; height:4mm;}
+  .kcard .kc-top .kc-tx{min-width:0;}
+  .kcard .kc-top .kc-tx b{display:block; font-size:2.9mm; font-weight:700; letter-spacing:.02em; line-height:1.15;}
+  .kcard .kc-top .kc-tx small{display:block; font-size:2.05mm; opacity:.82; line-height:1.3;}
+  .kcard .kc-body{flex:1; display:flex; padding:2.6mm 3.4mm 0; gap:3mm;}
+  .kcard .kc-info{flex:1; min-width:0;}
+  .kcard .kc-info .lb{font-size:1.9mm; letter-spacing:.1em; text-transform:uppercase; color:#7A8578; font-weight:700;}
+  .kcard .kc-info .nm{font-size:4mm; font-weight:800; line-height:1.15; margin:.4mm 0 1.6mm; word-break:break-word;}
+  .kcard .kc-info .rw{font-size:2.5mm; color:#333; line-height:1.5;}
+  .kcard .kc-info .rw b{font-weight:700;}
+  .kcard .kc-badge{position:absolute; top:12.6mm; right:3mm; font-size:2mm; font-weight:800; letter-spacing:.06em; color:#B91C1C; border:.4mm solid #B91C1C; border-radius:1mm; padding:.6mm 1.4mm;}
+  .kcard .kc-bar{padding:1mm 3.4mm 2.4mm; text-align:center;}
+  .kcard .kc-bar svg{width:100%; height:11mm; display:block;}
+  .kcard .kc-bar .kc-num{font-family:ui-monospace,monospace; font-size:2.5mm; letter-spacing:.22em; font-weight:700; margin-top:.6mm;}
+  .kcard .kc-bar .kc-none{font-size:2.4mm; color:#B45309; font-weight:700; padding:3mm 0;}
+  .kartu-hint{font-size:12.5px; color:var(--muted); text-align:center; max-width:420px; line-height:1.5;}
+
   @media print{
     .topbar, .nav, .tabs, .toolbar, .h-sub, .h-eye, .h-title, #bentrokBanner, #tempatBanner, .ws-menu, .ws-backdrop, .xlsx-tools{display:none!important;}
     .print-only{display:block!important; margin:0 0 12px;}
@@ -450,6 +569,13 @@
     body.rapor-open .rapor-logo{width:54px;}
     body.rapor-open .rcols, body.rapor-open .rmeta, body.rapor-open .rnotes, body.rapor-open .rapor-sign, body.rapor-open .rapor-id, body.rapor-open .rapor-kop-img{break-inside:avoid;}
     body.rapor-open .rtab tr{break-inside:avoid;}
+    /* cetak kartu santri */
+    #authScreen{display:none!important;}
+    body.kartu-open > *:not(#kartuOverlay){display:none!important;}
+    body.kartu-open #kartuOverlay{position:static; display:block; background:#fff;}
+    body.kartu-open .rapor-bar, body.kartu-open .kartu-hint{display:none!important;}
+    body.kartu-open .kartu-scroll{overflow:visible; padding:0; display:block; background:#fff;}
+    body.kartu-open .kcard{box-shadow:none; border:.3mm solid #999; margin:0 4mm 4mm 0; display:inline-flex; vertical-align:top; break-inside:avoid; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
     /* tebal & pekat untuk kertas khusus */
     body.rapor-open .rapor-sheet h1{font-size:15px; font-weight:800; color:#103D22;}
     body.rapor-open .rapor-sheet .rsub{color:#111; font-weight:800; font-size:11px;}
@@ -477,12 +603,62 @@
 </style>
 </head>
 <body>
+
+<!-- ============ LAYAR MASUK (Firebase Authentication) ============ -->
+<div class="auth" id="authScreen">
+  <div class="auth-in">
+    <div class="auth-brand">
+      <div class="auth-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H19v3H6.5A2.5 2.5 0 0 1 4 20.5z"/><path d="M9 8h6M9 11.5h4"/></svg></div>
+      <h1>Atur Ngaji MDIIA</h1>
+      <p>Ma&rsquo;had Ad-Dirasah Al-Islamiyyah Ibnu Aqil<br/>Jadwal ngaji &middot; Nilai &amp; rapor &middot; Kartu santri</p>
+    </div>
+
+    <div class="auth-card">
+      <h2>Masuk</h2>
+      <p class="sub">Gunakan email &amp; kata sandi yang sudah didaftarkan pengurus.</p>
+
+      <div class="auth-f">
+        <span>Email</span>
+        <div class="wrap"><input id="auEmail" type="email" inputmode="email" autocomplete="username" placeholder="nama@email.com" /></div>
+      </div>
+      <div class="auth-f">
+        <span>Kata sandi</span>
+        <div class="wrap"><input id="auPass" type="password" autocomplete="current-password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" /><button class="auth-eye" id="auEye" type="button">Lihat</button></div>
+      </div>
+
+      <button class="auth-btn" id="auLogin"><span class="spin"></span><span id="auLoginTx">Masuk</span></button>
+
+      <div class="auth-sub">
+        <button class="auth-link" id="auForgot" type="button">Lupa kata sandi?</button>
+        <span style="font-size:11.5px;color:var(--muted);">Butuh akun? Hubungi admin.</span>
+      </div>
+
+      <div class="auth-msg" id="auMsg"></div>
+      <button class="auth-offline" id="auOffline" type="button">Lanjut tanpa koneksi (data di HP ini)</button>
+    </div>
+
+    <div class="auth-inst" id="auInstall" style="display:none;">
+      <b>Pasang sebagai aplikasi HP</b>
+      <p id="auInstallTx">Pasang Atur Ngaji MDIIA di layar utama agar bisa dibuka seperti aplikasi biasa, tanpa membuka browser.</p>
+      <button id="auInstallBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 11l5 5 5-5M5 20h14"/></svg>Pasang aplikasi</button>
+    </div>
+
+    <p class="auth-foot">MDIIA &middot; Atur Ngaji<br/>Data tersimpan aman di Firebase.</p>
+  </div>
+</div>
 <div class="shell">
   <div class="topbar">
     <button class="mark ws-btn" id="wsSwitch" title="Pindah halaman"><svg id="wsIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span class="ws-caret"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>
     <div class="who"><div class="nm" id="wsName">Jadwal &amp; Tempat</div><div class="rl" id="wsSub">Madrasah · Ngaji</div></div>
     <button class="act fbtop off" id="fbTop" title="Sinkronisasi online"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg><span class="fbtop-dot"></span></button>
+    <button class="act acct" id="btnAcct" title="Akun"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></button>
     <button class="act" id="btnPrint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Cetak</button>
+  </div>
+  <div class="acct-menu" id="acctMenu">
+    <div class="acct-who"><b id="acctEmail">&mdash;</b><small id="acctState">Belum masuk</small></div>
+    <button id="acctInstall" style="display:none;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 11l5 5 5-5M5 20h14"/></svg>Pasang aplikasi di HP</button>
+    <button id="acctSync"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>Status sinkronisasi</button>
+    <button class="danger" id="acctLogout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg>Keluar</button>
   </div>
   <div class="ws-backdrop" id="wsBackdrop"></div>
   <div class="ws-menu" id="wsMenu">
@@ -496,6 +672,11 @@
       <span class="wi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
       <span class="wi-tx"><b>Nilai &amp; Rapor</b><small>Input nilai, peringkat, rapor</small></span>
       <span class="wi-tick" data-tick="nilai"></span>
+    </button>
+    <button class="ws-item" data-ws="kartu">
+      <span class="wi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M6 15h5"/></svg></span>
+      <span class="wi-tx"><b>Kartu Santri</b><small>Status kartu, keluhan, barcode</small></span>
+      <span class="wi-tick" data-tick="kartu"></span>
     </button>
   </div>
 
@@ -579,6 +760,39 @@
       <div id="nilaiList"></div>
     </section>
 
+    <!-- KARTU SANTRI -->
+    <section class="page" id="page-kartu">
+      <p class="eyebrow h-eye">Administrasi kartu</p>
+      <h1 class="h-title">Data kartu santri</h1>
+      <p class="h-sub">Pantau kepemilikan kartu, pembayaran, keluhan, dan kartu yang hilang. Nama &amp; NIS/NIPD diambil dari <b>Kelola &rarr; Santri</b>. Kartu hilang bisa dicetak ulang lengkap dengan barcode NIS/NIPD.</p>
+
+      <div id="kartuBanner"></div>
+      <div class="kstat" id="kartuStat"></div>
+
+      <div class="tabs" id="kartuTabs"></div>
+
+      <div class="xlsx-tools">
+        <button class="xtool" id="btnTemplateKartu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v5h5M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M8 13h8M8 17h5"/></svg>Template</button>
+        <label class="xtool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9M7 13l5-5 5 5M5 4h14"/></svg>Impor kartu<input type="file" id="fileKartu" accept=".xlsx,.xls" hidden></label>
+        <button class="xtool" id="btnExportKartu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 11l5 5 5-5M5 20h14"/></svg>Ekspor kartu</button>
+        <button class="xtool xtool-accent" id="btnCetakHilang"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Cetak kartu hilang</button>
+      </div>
+
+      <input class="search" id="searchKartu" placeholder="Cari nama atau NIS/NIPD&hellip;" autocomplete="off" style="margin-bottom:8px;" />
+      <select class="kfilter" id="filterKartu">
+        <option value="__all">Semua status</option>
+        <option value="belum-punya">Belum punya kartu</option>
+        <option value="punya">Sudah punya kartu</option>
+        <option value="belum-bayar">Belum bayar kartu</option>
+        <option value="sudah-bayar">Sudah bayar kartu</option>
+        <option value="hilang">Kartu hilang</option>
+        <option value="keluhan">Ada keluhan</option>
+        <option value="tanpa-nis">Belum ada NIS/NIPD</option>
+      </select>
+
+      <div id="kartuList"></div>
+    </section>
+
     <!-- KELOLA -->
     <section class="page" id="page-kelola">
       <p class="eyebrow h-eye">Data dasar</p>
@@ -597,9 +811,10 @@
 
       <div class="panel">
         <h3>Santri <span class="count" id="cntSantri"></span></h3>
-        <p class="lead">Data santri untuk penilaian. Ketuk nama untuk ubah kelas Ngaji.</p>
+        <p class="lead">Data induk santri: <b>NIS/NIPD</b>, nama, dan kelas Ngaji. Dipakai untuk nilai, rapor, dan kartu santri. Ketuk nama untuk mengubah.</p>
         <div class="addrow">
           <input id="inSantri" placeholder="Nama santri" style="flex:1 1 100%;" />
+          <input id="inSantriNis" placeholder="NIS / NIPD" style="flex:1 1 120px;" autocomplete="off" />
           <select id="inSantriNgaji" style="flex:1 1 110px;"></select>
           <button class="add" id="addSantri">+</button>
         </div>
@@ -731,6 +946,16 @@
       </div>
 
       <div class="panel">
+        <h3>Bersihkan Data Mengendap</h3>
+        <p class="lead">Data mengendap (yatim) adalah sisa data yang pemiliknya sudah tidak ada — misalnya nilai milik santri yang sudah dihapus, status kartu tanpa santri, atau baris jadwal yang kelas/jamnya sudah dihapus. Tidak terlihat di layar, tapi tetap memenuhi penyimpanan dan ikut tersinkron ke semua HP.</p>
+        <div class="orphan-box" id="orphanInfo"></div>
+        <div style="display:flex;gap:9px;">
+          <button class="btn-line" id="btnScanOrphan" style="flex:1;">Periksa ulang</button>
+          <button class="btn-line danger" id="btnCleanOrphan" style="flex:1;">Hapus data mengendap</button>
+        </div>
+      </div>
+
+      <div class="panel">
         <h3>Data contoh</h3>
         <p class="lead">Muat ulang isi contoh, atau kosongkan semuanya untuk mulai dari nol.</p>
         <div style="display:flex;gap:9px;">
@@ -803,6 +1028,16 @@
   <div class="rapor-scroll"><div class="rapor-sheet" id="raporSheet"></div></div>
 </div>
 
+<!-- KARTU SANTRI (cetak) -->
+<div class="kartu-overlay" id="kartuOverlay">
+  <div class="rapor-bar">
+    <button class="rapor-close" id="kartuClose">&lsaquo; Tutup</button>
+    <span class="rapor-title" id="kartuTitle">Kartu Santri</span>
+    <button class="rapor-print" id="kartuPrint">Cetak</button>
+  </div>
+  <div class="kartu-scroll" id="kartuSheet"></div>
+</div>
+
 <!-- EDIT MASTER -->
 <div class="modal-bg" id="editBg">
   <div class="modal">
@@ -853,8 +1088,8 @@ const $$ = s => Array.from(document.querySelectorAll(s));
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,6);
 
 // ---- State ----
-let state = { kelas:[], hari:[], slot:[], ustadz:[], pelajaran:[], jadwal:[], santri:[], nilai:{}, rapor:{} };
-const APP_TITLE = (typeof document!=='undefined' && document.title) || 'Web Jadwal Ngaji dan Nilai';
+let state = { kelas:[], hari:[], slot:[], ustadz:[], pelajaran:[], jadwal:[], santri:[], nilai:{}, rapor:{}, kartu:{} };
+const APP_TITLE = (typeof document!=='undefined' && document.title) || 'Atur Ngaji MDIIA';
 let curKelas = null;
 let curUstadz = null;
 let editing = null;        // { kelas, hari, slotId, existingId }
@@ -874,13 +1109,16 @@ const PAGE_ICON = {
   ustadz:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></svg>',
   rekap:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>',
   nilai:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>',
+  kartu:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M6 15h5"/></svg>',
   kelola:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12.2 2h-.4a2 2 0 0 0-2 2v.2a2 2 0 0 1-1 1.7l-.4.2a2 2 0 0 1-2 0l-.2-.1a2 2 0 0 0-2.7.7l-.2.4a2 2 0 0 0 .7 2.7l.2.1a2 2 0 0 1 1 1.7v.5a2 2 0 0 1-1 1.7l-.2.1a2 2 0 0 0-.7 2.7l.2.4a2 2 0 0 0 2.7.7l.2-.1a2 2 0 0 1 2 0l.4.2a2 2 0 0 1 1 1.7v.2a2 2 0 0 0 2 2h.4a2 2 0 0 0 2-2v-.2a2 2 0 0 1 1-1.7l.4-.2a2 2 0 0 1 2 0l.2.1a2 2 0 0 0 2.7-.7l.2-.4a2 2 0 0 0-.7-2.7l-.2-.1a2 2 0 0 1-1-1.7v-.5a2 2 0 0 1 1-1.7l.2-.1a2 2 0 0 0 .7-2.7l-.2-.4a2 2 0 0 0-2.7-.7l-.2.1a2 2 0 0 1-2 0l-.4-.2a2 2 0 0 1-1-1.7V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>'
 };
-const PAGE_LABEL = { jadwal:'Jadwal', tempat:'Tempat', ustadz:'Ustadz', rekap:'Rekap', nilai:'Nilai', kelola:'Kelola' };
+const PAGE_LABEL = { jadwal:'Jadwal', tempat:'Tempat', ustadz:'Ustadz', rekap:'Rekap', nilai:'Nilai', kartu:'Kartu', kelola:'Kelola' };
 const WORKSPACES = {
-  jadwal: { name:'Jadwal &amp; Tempat', sub:'Madrasah · Ngaji', pages:['jadwal','tempat','ustadz','rekap','kelola'] },
-  nilai:  { name:'Nilai &amp; Rapor',   sub:'Penilaian santri', pages:['nilai','kelola'] }
+  jadwal: { name:'Jadwal &amp; Tempat', sub:'Madrasah \u00b7 Ngaji', pages:['jadwal','tempat','ustadz','rekap','kelola'] },
+  nilai:  { name:'Nilai &amp; Rapor',   sub:'Penilaian santri', pages:['nilai','kelola'] },
+  kartu:  { name:'Kartu Santri',        sub:'Kartu \u00b7 barcode NIS', pages:['kartu','kelola'] }
 };
+const WS_ICON_PAGE = { jadwal:'jadwal', nilai:'nilai', kartu:'kartu' };
 function wsForPage(page){
   if(WORKSPACES[curWs] && WORKSPACES[curWs].pages.includes(page)) return curWs;
   for(const w in WORKSPACES){ if(WORKSPACES[w].pages.includes(page)) return w; }
@@ -948,6 +1186,13 @@ function normalizeState(){
   ['kelas','hari','slot','ustadz','pelajaran','jadwal','santri','tempat'].forEach(k=>{ if(!Array.isArray(state[k])) state[k]=[]; });
   if(!state.kelas.length) state.kelas = DEFAULT_KELAS.slice();
   if(!state.nilai || typeof state.nilai!=='object') state.nilai={};
+  // ---- data kartu santri ----
+  if(!state.kartu || typeof state.kartu!=='object') state.kartu={};
+  state.santri.forEach(s=>{ if(s.nis==null) s.nis=''; else s.nis=String(s.nis).trim(); });
+  { const sid=new Set(state.santri.map(s=>s.id));
+    for(const k in state.kartu){ if(!sid.has(k)){ delete state.kartu[k]; continue; }
+      const v=state.kartu[k]||{};
+      state.kartu[k]={ punya:!!v.punya, bayar:!!v.bayar, hilang:!!v.hilang, keluhan:String(v.keluhan||'') }; } }
   state.jadwal.forEach(e=>{ if(typeof e.bandongan!=='boolean') e.bandongan=false; if(e.tempatId===undefined) e.tempatId=null; });
   // buang tempatId yang menunjuk ke tempat yang sudah dihapus
   { const ids=new Set(state.tempat.map(t=>t.id)); state.jadwal.forEach(e=>{ if(e.tempatId && !ids.has(e.tempatId)) e.tempatId=null; }); }
@@ -992,12 +1237,15 @@ const writerId = uid();
 let cloudCfg = null, cloudKode = '', cloudRef = null, cloudOn = false, applyingRemote = false, pushTimer = null, fbLoading = null;
 
 function loadFirebaseSDK(){
-  if(window.firebase && window.firebase.database) return Promise.resolve();
+  if(window.firebase && window.firebase.database && window.firebase.auth) return Promise.resolve();
   if(fbLoading) return fbLoading;
+  const V = 'https://www.gstatic.com/firebasejs/10.12.2/';
   fbLoading = new Promise((resolve, reject)=>{
     const add = (src, cb)=>{ const el=document.createElement('script'); el.src=src; el.onload=cb; el.onerror=()=>reject(new Error('Gagal memuat Firebase. Cek koneksi internet.')); document.head.appendChild(el); };
-    add('https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js', ()=>{
-      add('https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js', ()=>resolve());
+    add(V+'firebase-app-compat.js', ()=>{
+      add(V+'firebase-auth-compat.js', ()=>{
+        add(V+'firebase-database-compat.js', ()=>resolve());
+      });
     });
   });
   return fbLoading;
@@ -1044,6 +1292,11 @@ async function cloudConnect(){
     cloudOn=false; cloudStatus('Gagal: '+(err&&err.message?err.message:'tidak diketahui'),'err');
   }
 }
+function cloudDetach(){
+  try{ if(cloudRef) cloudRef.off(); }catch(e){}
+  cloudRef=null; cloudOn=false;
+  cloudStatus('Tidak aktif','');
+}
 function cloudDisconnect(){
   try{ if(cloudRef) cloudRef.off(); }catch(e){}
   cloudRef=null; cloudOn=false; cloudCfg=null; cloudKode=''; clearCloudCfg();
@@ -1082,6 +1335,7 @@ function renderActivePage(){
   else if($('#page-rekap').classList.contains('active')) renderRekapPage();
   else if($('#page-nilai').classList.contains('active')) renderNilaiPage();
   else if($('#page-ustadz').classList.contains('active')) renderUstadzPage();
+  else if($('#page-kartu').classList.contains('active')) renderKartuPage();
   else if($('#page-kelola').classList.contains('active')) renderKelola();
 }
 function renderCloudPanel(){
@@ -1091,7 +1345,7 @@ function renderCloudPanel(){
 }
 
 function makeSeedData(){
-  const st = { kelas:[], hari:[], slot:[], ustadz:[], pelajaran:[], jadwal:[], santri:[], nilai:{}, tempat:[] };
+  const st = { kelas:[], hari:[], slot:[], ustadz:[], pelajaran:[], jadwal:[], santri:[], nilai:{}, tempat:[], kartu:{} };
   st.kelas = DEFAULT_KELAS.slice();
   st.tempat = ['Aula','Masjid','Ruang A','Ruang B','Teras'].map(n=>({id:uid(), nama:n}));
   const u = ['Ust. Hamid','Ust. Salim','Ust. Faroghy','Ust. Yusuf','Ust. Anwar'];
@@ -1133,7 +1387,7 @@ function makeSeedData(){
     ['Umar Faruq','8A','Ibtida 1'], ['Zaid Abdullah','8A','Ibtida 1'], ['Ali Mahmud','8B','Ibtida 1'],
     ['Yusuf Habibi','9A','Goyah'],
   ];
-  st.santri = sd.map(s=>({id:uid(), nama:s[0], ngaji:s[2]}));
+  st.santri = sd.map((s,i)=>({id:uid(), nama:s[0], ngaji:s[2], nis:'2601'+String(i+1).padStart(3,'0')}));
   // contoh nilai untuk beberapa santri Idad 1 (beberapa pelajaran) agar rekap/peringkat terlihat
   const p0=st.pelajaran[0].id, p1=st.pelajaran[2].id, p2=st.pelajaran[3].id;
   st.nilai = {};
@@ -1243,8 +1497,8 @@ function renderNav(){
 function renderWsChrome(){
   const ws = WORKSPACES[curWs] || WORKSPACES.jadwal;
   if($('#wsName')) $('#wsName').innerHTML = ws.name;
-  if($('#wsSub')) $('#wsSub').textContent = (curWs==='nilai' ? 'Penilaian santri' : 'Madrasah · Ngaji');
-  if($('#wsIcon')) $('#wsIcon').outerHTML = (PAGE_ICON[curWs==='nilai'?'nilai':'jadwal']||'').replace('<svg ', '<svg id="wsIcon" ');
+  if($('#wsSub')) $('#wsSub').textContent = ws.sub || 'Madrasah \u00b7 Ngaji';
+  if($('#wsIcon')) $('#wsIcon').outerHTML = (PAGE_ICON[WS_ICON_PAGE[curWs]||'jadwal']||'').replace('<svg ', '<svg id="wsIcon" ');
   $$('#wsMenu .ws-item').forEach(b=>b.classList.toggle('on', b.dataset.ws===curWs));
   $$('#wsMenu [data-tick]').forEach(t=>t.textContent = (t.dataset.tick===curWs ? '\u2713' : ''));
 }
@@ -1803,7 +2057,7 @@ function renderKelola(){
   $('#cntSantri').textContent = state.santri.length ? '('+ss.length+'/'+state.santri.length+')' : '';
   $('#listSantri').innerHTML = state.santri.length
     ? (ss.length ? ss.map(s=>
-        '<div class="slot-row"><button class="slot-main" data-edit-st="'+s.id+'"><span class="nm">'+s.nama+'</span><span class="tm">'+(s.ngaji||'\u2014')+'</span></button><button class="slot-del" data-del-st="'+s.id+'">\u00d7</button></div>').join('')
+        '<div class="slot-row"><button class="slot-main" data-edit-st="'+s.id+'"><span class="nm">'+(s.nis?'<span class="nistag">'+escAttr(s.nis)+'</span> ':'')+escAttr(s.nama)+'</span><span class="tm">'+(s.ngaji||'\u2014')+'</span></button><button class="slot-del" data-del-st="'+s.id+'">\u00d7</button></div>').join('')
         : '<span style="font-size:12.5px;color:var(--muted)">Tidak ada yang cocok.</span>')
     : '<span style="font-size:12.5px;color:var(--muted)">Belum ada. Tambah manual atau impor Excel.</span>';
   // ustadz (urut abjad + filter)
@@ -1859,6 +2113,337 @@ function renderKelola(){
       : '<span style="font-size:12.5px;color:var(--muted)">Belum ada.</span>';
   }
   renderRaporConfig();
+  renderOrphanInfo();
+}
+
+// ================= KARTU SANTRI =================
+// Nilai kartu per santri: state.kartu[santriId] = {punya, bayar, hilang, keluhan}
+const K_DEF = { punya:false, bayar:false, hilang:false, keluhan:'' };
+const kOf = id => state.kartu[id] || K_DEF;
+function kSet(id, patch){
+  const v = state.kartu[id] || (state.kartu[id] = { punya:false, bayar:false, hilang:false, keluhan:'' });
+  Object.assign(v, patch);
+  if(!v.punya && !v.bayar && !v.hilang && !String(v.keluhan||'').trim()) delete state.kartu[id];
+}
+let curKartuKelas = '__all';
+
+// ---- Barcode Code 128-B (SVG murni, tanpa pustaka luar) ----
+const C128 = ['212222','222122','222221','121223','121322','131222','122213','122312','132212','221213','221312','231212','112232','122132','122231','113222','123122','123221','223211','221132','221231','213212','223112','312131','311222','321122','321221','312212','322112','322211','212123','212321','232121','111323','131123','131321','112313','132113','132311','211313','231113','231311','112133','112331','132131','113123','113321','133121','313121','211331','231131','213113','213311','213131','311123','311321','331121','312113','312311','332111','314111','221411','431111','111224','111422','121124','121421','141122','141221','112214','112412','122114','122411','142112','142211','241211','221114','413111','241112','134111','111242','121142','121241','114212','124112','124211','411212','421112','421211','212141','214121','412121','111143','111341','131141','114113','114311','411113','411311','113141','114131','311141','411131','211412','211214','211232','2331112'];
+function code128B(text){
+  const data = String(text==null?'':text).replace(/[^\x20-\x7E]/g,'');
+  if(!data) return '';
+  const codes = [104]; let sum = 104;
+  for(let i=0;i<data.length;i++){ const v = data.charCodeAt(i)-32; codes.push(v); sum += v*(i+1); }
+  codes.push(sum % 103); codes.push(106);
+  const QUIET = 10;
+  let x = QUIET, bars = [];
+  for(const c of codes){
+    const pat = C128[c]; let isBar = true;
+    for(let k=0;k<pat.length;k++){ const w = +pat[k]; if(isBar) bars.push([x,w]); x += w; isBar = !isBar; }
+  }
+  const total = x + QUIET, H = 100;
+  let rects = '';
+  for(const b of bars) rects += '<rect x="'+b[0]+'" y="0" width="'+b[1]+'" height="'+H+'"/>';
+  return '<svg viewBox="0 0 '+total+' '+H+'" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" role="img" aria-label="Barcode '+escAttr(data)+'">'
+    + '<rect x="0" y="0" width="'+total+'" height="'+H+'" fill="#ffffff"/><g fill="#000000">'+rects+'</g></svg>';
+}
+
+// ---- Kartu fisik (untuk dicetak) ----
+const KC_MARK = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H19v3H6.5A2.5 2.5 0 0 1 4 20.5z"/></svg>';
+function kartuCardHTML(s){
+  const nis = String(s.nis||'').trim();
+  const k = kOf(s.id);
+  const bar = nis ? code128B(nis) : '';
+  const R = state.rapor || {};
+  return '<div class="kcard">'
+    + '<div class="kc-top"><span class="kc-mk">'+KC_MARK+'</span><span class="kc-tx"><b>KARTU SANTRI \u00b7 MDIIA</b><small>Ma\u2019had Ad-Dirasah Al-Islamiyyah Ibnu Aqil</small></span></div>'
+    + (k.hilang ? '<span class="kc-badge">PENGGANTI</span>' : '')
+    + '<div class="kc-body"><div class="kc-info">'
+    +   '<div class="lb">Nama Santri</div>'
+    +   '<div class="nm">'+escAttr(s.nama)+'</div>'
+    +   '<div class="rw">Kelas Ngaji &middot; <b>'+escAttr(s.ngaji||'\u2014')+'</b></div>'
+    +   '<div class="rw">NIS/NIPD &middot; <b>'+escAttr(nis||'\u2014')+'</b></div>'
+    +   (R.tahun ? '<div class="rw">Tahun Pelajaran &middot; <b>'+escAttr(R.tahun)+'</b></div>' : '')
+    + '</div></div>'
+    + '<div class="kc-bar">'
+    +   (bar ? bar + '<div class="kc-num">'+escAttr(nis)+'</div>' : '<div class="kc-none">NIS/NIPD belum diisi \u2014 isi dulu di Kelola &rarr; Santri</div>')
+    + '</div>'
+    + '</div>';
+}
+function openKartuCards(list, title){
+  if(!list || !list.length){ toast('Tidak ada kartu untuk dicetak.'); return; }
+  $('#kartuTitle').textContent = title || 'Kartu Santri';
+  $('#kartuSheet').innerHTML = list.map(kartuCardHTML).join('')
+    + '<p class="kartu-hint">Ukuran kartu 85,6 \u00d7 54 mm (seukuran KTP). Saat mencetak pilih kertas A4, skala 100%, dan matikan \u201cfit to page\u201d agar ukurannya presisi.</p>';
+  $('#kartuOverlay').classList.add('show');
+  document.body.classList.add('kartu-open');
+  document.title = (list.length===1 ? 'Kartu - '+list[0].nama : 'Kartu Santri - '+list.length+' kartu');
+}
+function closeKartuCards(){ $('#kartuOverlay').classList.remove('show'); document.body.classList.remove('kartu-open'); document.title = APP_TITLE; }
+
+// ---- Daftar & filter ----
+function kartuScope(){
+  let list = sortedSantri();
+  if(curKartuKelas && curKartuKelas!=='__all') list = list.filter(s=>s.ngaji===curKartuKelas);
+  return list;
+}
+function kartuFiltered(){
+  let list = kartuScope();
+  const f = $('#filterKartu') ? $('#filterKartu').value : '__all';
+  if(f==='belum-punya')  list = list.filter(s=>!kOf(s.id).punya);
+  else if(f==='punya')       list = list.filter(s=> kOf(s.id).punya);
+  else if(f==='belum-bayar') list = list.filter(s=>!kOf(s.id).bayar);
+  else if(f==='sudah-bayar') list = list.filter(s=> kOf(s.id).bayar);
+  else if(f==='hilang')      list = list.filter(s=> kOf(s.id).hilang);
+  else if(f==='keluhan')     list = list.filter(s=> String(kOf(s.id).keluhan||'').trim());
+  else if(f==='tanpa-nis')   list = list.filter(s=>!String(s.nis||'').trim());
+  const q = norm($('#searchKartu') ? $('#searchKartu').value : '');
+  if(q) list = list.filter(s=> norm(s.nama).includes(q) || norm(s.nis).includes(q) || norm(s.ngaji).includes(q));
+  return list;
+}
+function renderKartuTabs(){
+  const t = $('#kartuTabs'); if(!t) return;
+  if(curKartuKelas!=='__all' && !state.kelas.includes(curKartuKelas)) curKartuKelas='__all';
+  t.innerHTML = '<button class="tab'+(curKartuKelas==='__all'?' on':'')+'" data-kk="__all">Semua</button>'
+    + state.kelas.map(k=>'<button class="tab'+(k===curKartuKelas?' on':'')+'" data-kk="'+escAttr(k)+'">'+escAttr(k)+'</button>').join('');
+}
+function renderKartuStat(){
+  const box = $('#kartuStat'); if(!box) return;
+  const list = kartuScope();
+  const n = list.length;
+  const punya  = list.filter(s=>kOf(s.id).punya).length;
+  const bayar  = list.filter(s=>kOf(s.id).bayar).length;
+  const hilang = list.filter(s=>kOf(s.id).hilang).length;
+  const keluh  = list.filter(s=>String(kOf(s.id).keluhan||'').trim()).length;
+  const noNis  = list.filter(s=>!String(s.nis||'').trim()).length;
+  const cell = (v,l,c)=>'<div class="box'+(c?' '+c:'')+'"><div class="v">'+v+'</div><div class="l">'+l+'</div></div>';
+  box.innerHTML = cell(n,'Total santri')
+    + cell(punya+'<span style="font-size:12px;color:#6B7669;">/'+n+'</span>','Punya kartu')
+    + cell((n-punya),'Belum punya', (n-punya)?'warn':'')
+    + cell(bayar+'<span style="font-size:12px;color:#6B7669;">/'+n+'</span>','Sudah bayar')
+    + cell((n-bayar),'Belum bayar', (n-bayar)?'warn':'')
+    + cell(hilang,'Kartu hilang', hilang?'bad':'')
+    + cell(keluh,'Ada keluhan', keluh?'warn':'')
+    + cell(noNis,'Tanpa NIS', noNis?'bad':'');
+}
+function renderKartuBanner(){
+  const box = $('#kartuBanner'); if(!box) return;
+  const msgs = [];
+  const map = {};
+  state.santri.forEach(s=>{ const v=String(s.nis||'').trim(); if(!v) return; (map[v]=map[v]||[]).push(s.nama); });
+  const dup = Object.keys(map).filter(k=>map[k].length>1);
+  if(dup.length) msgs.push('NIS/NIPD ganda: '+dup.slice(0,3).map(d=>d+' ('+map[d].length+'\u00d7)').join(', ')+(dup.length>3?', dll.':'')+'. Barcode bisa tertukar \u2014 perbaiki di Kelola.');
+  const noNis = state.santri.filter(s=>!String(s.nis||'').trim()).length;
+  if(noNis) msgs.push(noNis+' santri belum punya NIS/NIPD sehingga kartunya belum bisa dicetak.');
+  box.innerHTML = msgs.length
+    ? '<div class="banner bad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg><span>'+msgs.join(' ')+'</span></div>'
+    : '';
+}
+function renderKartuList(){
+  const box = $('#kartuList'); if(!box) return;
+  if(!state.santri.length){ box.innerHTML = '<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg><p>Belum ada santri. Tambah atau impor di <b>Kelola &rarr; Santri</b> dulu.</p></div>'; return; }
+  const list = kartuFiltered();
+  if(!list.length){ box.innerHTML = '<div class="empty"><p>Tidak ada santri yang cocok dengan pencarian/filter ini.</p></div>'; return; }
+  const tog = (on, cls, lbl, sid, f) => '<button class="ktog'+(on?' on':'')+' k-'+f+'" data-ks="'+sid+'" data-kf="'+f+'"><span class="bx">'+(on?'\u2713':'')+'</span>'+lbl+'</button>';
+  box.innerHTML = list.map(s=>{
+    const k = kOf(s.id);
+    const nis = String(s.nis||'').trim();
+    const keluhan = String(k.keluhan||'');
+    return '<div class="kitem'+(k.hilang?' lost':'')+'">'
+      + '<div class="ki-top"><div class="ki-id">'
+      +   '<div class="nm">'+escAttr(s.nama)+'</div>'
+      +   '<div class="mt"><span class="nistag'+(nis?'':' none')+'">'+(nis?escAttr(nis):'NIS belum ada')+'</span><span>'+escAttr(s.ngaji||'\u2014')+'</span></div>'
+      + '</div>'
+      + '<button class="ki-print" data-kp="'+s.id+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Kartu</button></div>'
+      + '<div class="ki-tags">'
+      +   tog(k.punya,'','Sudah punya kartu', s.id, 'punya')
+      +   tog(k.bayar,'','Sudah bayar', s.id, 'bayar')
+      +   tog(k.hilang,'','Kartu hilang', s.id, 'hilang')
+      + '</div>'
+      + '<input class="ki-note'+(keluhan.trim()?' filled':'')+'" data-kn="'+s.id+'" maxlength="120" placeholder="Keluhan kartu (mis. patah, foto salah, nama keliru)\u2026" value="'+escAttr(keluhan)+'" />'
+      + '</div>';
+  }).join('');
+}
+function renderKartuPage(){ renderKartuTabs(); renderKartuBanner(); renderKartuStat(); renderKartuList(); }
+
+// ---- Excel: Kartu ----
+function buildKartuWorkbook(rows){
+  const wb = XLSX.utils.book_new();
+  const aoa = [['NIS/NIPD','Nama','Kelas Ngaji','Punya Kartu','Sudah Bayar','Kartu Hilang','Keluhan'], ...rows];
+  XLSX.utils.book_append_sheet(wb, withCols(XLSX.utils.aoa_to_sheet(aoa),[{wch:14},{wch:26},{wch:12},{wch:12},{wch:12},{wch:12},{wch:40}]), 'Kartu');
+  const pet = [
+    ['PETUNJUK DATA KARTU SANTRI'],
+    [''],
+    ['1. Baris dicocokkan dengan santri lewat kolom NIS/NIPD. Bila NIS kosong, dicocokkan dengan Nama.'],
+    ['2. Kolom Punya Kartu / Sudah Bayar / Kartu Hilang diisi: Ya atau Tidak (boleh juga 1/0, v, ya, sudah, belum).'],
+    ['3. Kolom Keluhan berisi teks pendek, maksimal 120 huruf.'],
+    ['4. Impor hanya MENGUBAH status kartu. Data santri (nama, kelas) tidak ikut berubah.'],
+    ['5. Untuk menambah/mengubah santri & NIS, pakai menu Kelola \u2192 Santri \u2192 Impor.'],
+  ];
+  XLSX.utils.book_append_sheet(wb, withCols(XLSX.utils.aoa_to_sheet(pet),[{wch:96}]), 'Petunjuk');
+  return wb;
+}
+function templateKartu(){
+  if(typeof XLSX==='undefined'){ alert('Pustaka Excel belum termuat.'); return; }
+  const src = state.santri.length ? sortedSantri().slice(0,10) : [{nis:'2601001',nama:'Ahmad Fauzi',ngaji:'Idad 1'},{nis:'2601002',nama:'Umar Faruq',ngaji:'Ibtida 1'}];
+  const rows = src.map(s=>[String(s.nis||''), s.nama, s.ngaji||'', 'Tidak','Tidak','Tidak','']);
+  XLSX.writeFile(buildKartuWorkbook(rows), 'Template Kartu Santri.xlsx');
+  toast('Template kartu diunduh.');
+}
+function exportKartu(){
+  if(typeof XLSX==='undefined'){ alert('Pustaka Excel belum termuat.'); return; }
+  if(!state.santri.length){ toast('Belum ada santri.'); return; }
+  const yn = b => b ? 'Ya' : 'Tidak';
+  const rows = sortedSantri().map(s=>{ const k=kOf(s.id); return [String(s.nis||''), s.nama, s.ngaji||'', yn(k.punya), yn(k.bayar), yn(k.hilang), String(k.keluhan||'')]; });
+  XLSX.writeFile(buildKartuWorkbook(rows), 'Data Kartu Santri.xlsx');
+  toast('Data kartu diunduh.');
+}
+const TRUEY = ['ya','y','sudah','ada','1','true','v','x','\u2713','punya','hilang','sudah bayar'];
+const truthy = v => TRUEY.includes(String(v==null?'':v).trim().toLowerCase());
+function importKartu(file){
+  if(typeof XLSX==='undefined'){ alert('Pustaka Excel belum termuat.'); return; }
+  const reader = new FileReader();
+  reader.onload = ev=>{
+    try{
+      const wb = XLSX.read(new Uint8Array(ev.target.result), {type:'array'});
+      const js = sheetAOA(wb,'Kartu') || sheetAOA(wb, wb.SheetNames[0]);
+      if(!js || js.length<2) throw new Error('Sheet "Kartu" kosong atau tidak ditemukan.');
+      const head = js[0];
+      const ci = {
+        nis:     colIdx(head,['nis/nipd','nis','nipd','no induk','nomor induk']),
+        nama:    colIdx(head,['nama','nama santri','santri']),
+        punya:   colIdx(head,['punya kartu','sudah punya kartu','punya','kartu']),
+        bayar:   colIdx(head,['sudah bayar','bayar','pembayaran','lunas']),
+        hilang:  colIdx(head,['kartu hilang','hilang']),
+        keluhan: colIdx(head,['keluhan','catatan','komplain'])
+      };
+      if(ci.nis<0 && ci.nama<0) throw new Error('Kolom "NIS/NIPD" atau "Nama" tidak ditemukan.');
+      const byNis = {}, byNm = {};
+      state.santri.forEach(s=>{ const n=String(s.nis||'').trim(); if(n) byNis[n]=s; byNm[norm(s.nama)]=s; });
+      let ok=0, miss=0;
+      for(let i=1;i<js.length;i++){
+        const r = js[i]; if(!r || !r.length) continue;
+        const nis = ci.nis>=0 ? String(r[ci.nis]==null?'':r[ci.nis]).trim() : '';
+        const nm  = ci.nama>=0 ? norm(r[ci.nama]) : '';
+        const s = (nis && byNis[nis]) || (nm && byNm[nm]);
+        if(!s){ if(nis||nm) miss++; continue; }
+        kSet(s.id, {
+          punya:   ci.punya>=0   ? truthy(r[ci.punya])  : kOf(s.id).punya,
+          bayar:   ci.bayar>=0   ? truthy(r[ci.bayar])  : kOf(s.id).bayar,
+          hilang:  ci.hilang>=0  ? truthy(r[ci.hilang]) : kOf(s.id).hilang,
+          keluhan: ci.keluhan>=0 ? String(r[ci.keluhan]==null?'':r[ci.keluhan]).trim().slice(0,120) : kOf(s.id).keluhan
+        });
+        ok++;
+      }
+      save(); renderKartuPage();
+      toast('Impor kartu: '+ok+' santri diperbarui'+(miss?', '+miss+' tidak cocok':'')+'.');
+    }catch(err){ alert('Gagal impor kartu. '+(err&&err.message?err.message:'')); }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+/* =====================================================================
+   DATA MENGENDAP (yatim) \u2014 pemindaian & pembersihan
+   Menghapus sisa data yang pemiliknya sudah tidak ada:
+   nilai/kartu milik santri terhapus, jadwal dengan kelas/jam terhapus, dll.
+   ===================================================================== */
+const ORPHAN_LABEL = {
+  nilaiSantri:'Nilai milik santri yang sudah dihapus',
+  nilaiPelajaran:'Nilai untuk pelajaran yang sudah dihapus',
+  kartuSantri:'Status kartu milik santri yang sudah dihapus',
+  kartuKosong:'Status kartu kosong (tanpa isi)',
+  jadwalKelas:'Jadwal pada kelas yang sudah dihapus',
+  jadwalSesi:'Jadwal pada jam/sesi yang sudah dihapus',
+  jadwalHari:'Jadwal pada hari yang sudah dinonaktifkan',
+  jadwalPelajaran:'Jadwal dengan pelajaran yang sudah dihapus',
+  jadwalUstadz:'Jadwal dengan ustadz yang sudah dihapus',
+  jadwalTempat:'Tempat pada jadwal yang sudah dihapus',
+  santriKelas:'Santri yang kelasnya sudah dihapus',
+  raporKelas:'Pengaturan rapor (wali/tanda tangan) untuk kelas yang sudah dihapus'
+};
+function scanOrphans(bersihkan){
+  const r = {};
+  const bump = (k,n)=>{ if(n) r[k] = (r[k]||0) + n; };
+  const sIds  = new Set(state.santri.map(s=>s.id));
+  const pIds  = new Set(state.pelajaran.map(p=>p.id));
+  const uIds  = new Set(state.ustadz.map(u=>u.id));
+  const slIds = new Set(state.slot.map(s=>s.id));
+  const tIds  = new Set(state.tempat.map(t=>t.id));
+  const kSet  = new Set(state.kelas);
+  const hSet  = new Set(state.hari);
+
+  // --- nilai ---
+  for(const sid in state.nilai){
+    if(!sIds.has(sid)){ bump('nilaiSantri',1); if(bersihkan) delete state.nilai[sid]; continue; }
+    const row = state.nilai[sid]; if(!row || typeof row!=='object') continue;
+    for(const pid in row){ if(!pIds.has(pid)){ bump('nilaiPelajaran',1); if(bersihkan) delete row[pid]; } }
+    if(bersihkan && !Object.keys(row).length) delete state.nilai[sid];
+  }
+  // --- kartu ---
+  for(const sid in state.kartu){
+    if(!sIds.has(sid)){ bump('kartuSantri',1); if(bersihkan) delete state.kartu[sid]; continue; }
+    const v = state.kartu[sid];
+    if(v && !v.punya && !v.bayar && !v.hilang && !String(v.keluhan||'').trim()){
+      bump('kartuKosong',1); if(bersihkan) delete state.kartu[sid];
+    }
+  }
+  // --- jadwal ---
+  const buang = [];
+  state.jadwal.forEach(e=>{
+    let drop = null;
+    if(!kSet.has(e.kelas)) drop='jadwalKelas';
+    else if(!slIds.has(e.slotId)) drop='jadwalSesi';
+    else if(!hSet.has(e.hari)) drop='jadwalHari';
+    else if(e.pelajaranId && !pIds.has(e.pelajaranId)) drop='jadwalPelajaran';
+    else if(e.ustadzId && !uIds.has(e.ustadzId)) drop='jadwalUstadz';
+    if(drop){ bump(drop,1); buang.push(e.id); return; }
+    if(e.tempatId && !tIds.has(e.tempatId)){ bump('jadwalTempat',1); if(bersihkan) e.tempatId=null; }
+  });
+  if(bersihkan && buang.length){ const del=new Set(buang); state.jadwal = state.jadwal.filter(e=>!del.has(e.id)); }
+  // --- santri tanpa kelas yang sah ---
+  state.santri.forEach(s=>{
+    if(s.ngaji && !kSet.has(s.ngaji)){ bump('santriKelas',1); if(bersihkan) s.ngaji=''; }
+  });
+  // --- pengaturan rapor per kelas ---
+  const R = state.rapor || {};
+  ['wali','ttd','ttdSize','ttdPos','ttdX','ttdY'].forEach(key=>{
+    const m = R[key]; if(!m || typeof m!=='object') return;
+    for(const k in m){ if(!kSet.has(k)){ bump('raporKelas',1); if(bersihkan) delete m[k]; } }
+  });
+
+  r.__total = Object.keys(r).reduce((a,k)=> k==='__total' ? a : a + r[k], 0);
+  return r;
+}
+function orphanSummaryHTML(r){
+  if(!r.__total) return '<b>Bersih.</b> Tidak ada data mengendap yang perlu dihapus.';
+  const items = Object.keys(r).filter(k=>k!=='__total')
+    .map(k=>'<li><b>'+r[k]+'</b> \u00b7 '+(ORPHAN_LABEL[k]||k)+'</li>').join('');
+  return 'Ditemukan <b>'+r.__total+'</b> data mengendap:<ul>'+items+'</ul>';
+}
+function renderOrphanInfo(r){
+  const box = $('#orphanInfo'); if(!box) return;
+  r = r || scanOrphans(false);
+  box.className = 'orphan-box ' + (r.__total ? 'dirty' : 'clean');
+  box.innerHTML = orphanSummaryHTML(r);
+  const btn = $('#btnCleanOrphan'); if(btn) btn.disabled = !r.__total;
+  return r;
+}
+function bersihkanOrphans(diam){
+  const cek = scanOrphans(false);
+  if(!cek.__total){ if(!diam){ renderOrphanInfo(cek); toast('Sudah bersih \u2014 tidak ada data mengendap.'); } return cek; }
+  if(!diam){
+    const rincian = Object.keys(cek).filter(k=>k!=='__total').map(k=>'\u2022 '+cek[k]+' '+(ORPHAN_LABEL[k]||k)).join('\n');
+    if(!confirm('Hapus '+cek.__total+' data mengendap?\n\n'+rincian+'\n\nData yang masih terpakai TIDAK ikut terhapus. Tindakan ini tidak bisa dibatalkan.')) return null;
+  }
+  const hasil = scanOrphans(true);
+  normalizeState();
+  save();
+  if(!diam){
+    renderOrphanInfo();
+    renderKelola();
+    toast(hasil.__total+' data mengendap dihapus.');
+  }
+  return hasil;
 }
 
 // ---- Penilaian ----
@@ -1949,8 +2534,9 @@ function renderNilaiPage(){
   }
 }
 function delSantri(id){
-  if(!confirm('Hapus santri ini beserta nilainya?')) return false;
+  if(!confirm('Hapus santri ini beserta nilai & data kartunya?')) return false;
   state.santri = state.santri.filter(s=>s.id!==id);
+  if(state.kartu) delete state.kartu[id];
   delete state.nilai[id];
   save(); return true;
 }
@@ -2130,6 +2716,8 @@ function openEdit(type, id){
     $('#eTitle').textContent = 'Ubah santri';
     $('#eFields').innerHTML =
       '<span class="lbl">Nama santri</span><div class="field"><input id="eNama" value="'+escAttr(s.nama)+'" /></div>'
+      + '<span class="lbl">NIS / NIPD</span><div class="field"><input id="eNis" value="'+escAttr(s.nis||'')+'" placeholder="mis. 2601001" autocomplete="off" /></div>'
+      + '<p style="font-size:12px;color:var(--muted);margin:-4px 2px 10px;">Dipakai untuk barcode di kartu santri. Usahakan tidak ada yang sama.</p>'
       + '<span class="lbl">Kelas Ngaji</span><div class="field"><select id="eNgaji">'
       + state.kelas.map(k=>'<option'+(k===s.ngaji?' selected':'')+'>'+k+'</option>').join('') + '</select></div>';
   } else if(type==='tempat'){
@@ -2155,11 +2743,16 @@ function saveEdit(){
   } else if(editTarget.type==='sesi'){
     const s = slotById(editTarget.id); if(s){ s.nama=nama; s.mulai=$('#eMulai').value; s.selesai=$('#eSelesai').value; }
   } else if(editTarget.type==='santri'){
-    const s = santriById(editTarget.id); if(s){ s.nama=nama; s.ngaji=$('#eNgaji').value; }
+    const s = santriById(editTarget.id); if(s){
+      s.nama=nama; s.ngaji=$('#eNgaji').value;
+      const nis = ($('#eNis') ? $('#eNis').value : '').trim();
+      if(nis && state.santri.some(x=>x.id!==s.id && String(x.nis||'').trim()===nis)){ toast('NIS/NIPD '+nis+' sudah dipakai santri lain.'); }
+      s.nis = nis;
+    }
   } else if(editTarget.type==='tempat'){
     const t = tempById(editTarget.id); if(t) t.nama=nama;
   }
-  save(); closeEdit(); renderKelola(); if($('#page-nilai').classList.contains('active')) renderNilaiPage(); if($('#page-tempat').classList.contains('active')) renderTempatPage(); toast('Perubahan disimpan.');
+  save(); closeEdit(); renderKelola(); if($('#page-nilai').classList.contains('active')) renderNilaiPage(); if($('#page-tempat').classList.contains('active')) renderTempatPage(); if($('#page-kartu').classList.contains('active')) renderKartuPage(); toast('Perubahan disimpan.');
 }
 function deleteFromEdit(){
   if(!editTarget) return;
@@ -2170,7 +2763,7 @@ function deleteFromEdit(){
   else if(editTarget.type==='sesi') ok=delSlot(editTarget.id);
   else if(editTarget.type==='santri') ok=delSantri(editTarget.id);
   else if(editTarget.type==='tempat') ok=delTempat(editTarget.id);
-  if(ok){ closeEdit(); renderKelola(); if($('#page-nilai').classList.contains('active')) renderNilaiPage(); if($('#page-tempat').classList.contains('active')) renderTempatPage(); toast('Dihapus.'); }
+  if(ok){ closeEdit(); renderKelola(); if($('#page-nilai').classList.contains('active')) renderNilaiPage(); if($('#page-tempat').classList.contains('active')) renderTempatPage(); if($('#page-kartu').classList.contains('active')) renderKartuPage(); toast('Dihapus.'); }
 }
 
 // ---- Nav ----
@@ -2184,6 +2777,7 @@ function go(page){
   if(page==='rekap') renderRekapPage();
   if(page==='nilai') renderNilaiPage();
   if(page==='ustadz') renderUstadzPage();
+  if(page==='kartu') renderKartuPage();
   if(page==='kelola') renderKelola();
 }
 
@@ -2348,27 +2942,34 @@ function colIdx(headerRow, names){
 // ---- Excel: Santri ----
 function buildSantriWorkbook(rows){
   const wb = XLSX.utils.book_new();
-  const aoa = [['Nama','Kelas Ngaji'], ...rows];
-  XLSX.utils.book_append_sheet(wb, withCols(XLSX.utils.aoa_to_sheet(aoa),[{wch:24},{wch:12}]), 'Santri');
+  const aoa = [['NIS/NIPD','Nama','Kelas Ngaji'], ...rows];
+  const ws = withCols(XLSX.utils.aoa_to_sheet(aoa),[{wch:14},{wch:26},{wch:14}]);
+  // NIS ditulis sebagai teks agar angka nol di depan tidak hilang
+  for(let i=2;i<=aoa.length;i++){ const c=ws['A'+i]; if(c && c.v!=null){ c.t='s'; c.v=String(c.v); c.z='@'; } }
+  XLSX.utils.book_append_sheet(wb, ws, 'Santri');
   const pet = [
     ['PETUNJUK DATA SANTRI'],
     [''],
     ['1. Isi satu baris untuk satu santri.'],
-    ['2. Kelas Ngaji harus salah satu dari: '+state.kelas.join(', ')],
-    ['3. Saat diimpor, data ini MENGGANTI daftar santri di aplikasi.'],
+    ['2. Kolom NIS/NIPD adalah nomor induk santri. Dipakai untuk kartu santri & barcode.'],
+    ['3. NIS/NIPD sebaiknya unik (tidak boleh ada yang sama) dan diketik sebagai TEKS.'],
+    ['4. Kelas Ngaji harus salah satu dari: '+state.kelas.join(', ')],
+    ['5. Saat diimpor, data ini MENGGANTI daftar santri di aplikasi.'],
+    ['6. Status kartu, nilai, dan catatan rapor tetap ikut selama NIS atau namanya sama.'],
+    ['7. Santri lama yang TIDAK ada di file ini akan dihapus beserta seluruh datanya.'],
   ];
-  XLSX.utils.book_append_sheet(wb, withCols(XLSX.utils.aoa_to_sheet(pet),[{wch:70}]), 'Petunjuk');
+  XLSX.utils.book_append_sheet(wb, withCols(XLSX.utils.aoa_to_sheet(pet),[{wch:96}]), 'Petunjuk');
   return wb;
 }
 function templateSantri(){
   if(typeof XLSX==='undefined'){ alert('Pustaka Excel belum termuat.'); return; }
-  const rows = [['Ahmad Fauzi','Idad 1'],['Umar Faruq','Ibtida 1'],['Yusuf Habibi','Goyah']];
+  const rows = [['2601001','Ahmad Fauzi','Idad 1'],['2601002','Umar Faruq','Ibtida 1'],['2601003','Yusuf Habibi','Goyah']];
   XLSX.writeFile(buildSantriWorkbook(rows), 'Template Santri.xlsx');
   toast('Template santri diunduh.');
 }
 function exportSantri(){
   if(typeof XLSX==='undefined'){ alert('Pustaka Excel belum termuat.'); return; }
-  const rows = sortedSantri().map(s=>[s.nama, s.ngaji||'']);
+  const rows = sortedSantri().map(s=>[String(s.nis||''), s.nama, s.ngaji||'']);
   XLSX.writeFile(buildSantriWorkbook(rows), 'Data Santri.xlsx');
   toast('Data santri diunduh.');
 }
@@ -2381,20 +2982,73 @@ function importSantri(file){
       const js = sheetAOA(wb,'Santri') || sheetAOA(wb, wb.SheetNames[0]);
       if(!js || js.length<2) throw new Error('Sheet "Santri" kosong atau tidak ditemukan.');
       const head = js[0];
-      const ci = { nama:colIdx(head,['nama','santri','nama santri']), ng:colIdx(head,['kelas ngaji','ngaji','kls ngaji']) };
+      const ci = {
+        nama:colIdx(head,['nama','santri','nama santri']),
+        ng:colIdx(head,['kelas ngaji','ngaji','kls ngaji','kelas']),
+        nis:colIdx(head,['nis/nipd','nis','nipd','no induk','nomor induk','no. induk'])
+      };
       if(ci.nama<0) throw new Error('Kolom "Nama" tidak ditemukan.');
       const kelasNorm = s=>{ s=String(s||'').trim(); return state.kelas.find(k=>k.toLowerCase()===s.toLowerCase())||s; };
-      const arr=[]; let skipped=0;
+
+      // --- baca semua baris dulu ---
+      const arr=[]; let skipped=0; const nisSeen={}; let nisDobel=0;
       for(let i=1;i<js.length;i++){ const r=js[i];
         const nama=String(r[ci.nama]||'').trim(); if(!nama){ skipped++; continue; }
-        arr.push({ id:uid(), nama, ngaji: ci.ng>=0?kelasNorm(r[ci.ng]):'' });
+        let nis = ci.nis>=0 ? String(r[ci.nis]==null?'':r[ci.nis]).trim() : '';
+        if(nis){ if(nisSeen[nis]){ nisDobel++; } else nisSeen[nis]=1; }
+        arr.push({ id:uid(), nama, ngaji: ci.ng>=0?kelasNorm(r[ci.ng]):'', nis });
       }
-      state.santri = arr;
-      // buang nilai untuk santri yang tak ada lagi
-      const ids = new Set(arr.map(s=>s.id));
-      for(const sid in state.nilai){ if(!ids.has(sid)) delete state.nilai[sid]; }
-      save(); renderKelola(); if($('#page-nilai').classList.contains('active')) renderNilaiPage();
-      toast('Impor santri: '+arr.length+' data'+(skipped?', '+skipped+' dilewati':'')+'.');
+      if(!arr.length) throw new Error('Tidak ada baris santri yang bisa dibaca.');
+
+      // --- konfirmasi: tampilkan dampaknya secara jelas ---
+      const lama = state.santri.slice();
+      const punyaNis = new Set(arr.map(s=>s.nis).filter(Boolean));
+      const punyaNm  = new Set(arr.map(s=>norm(s.nama)));
+      const hilang = lama.filter(s=>{
+        const n=String(s.nis||'').trim();
+        return !(n && punyaNis.has(n)) && !punyaNm.has(norm(s.nama));
+      });
+      let pesan = 'IMPOR MENGGANTI SELURUH DAFTAR SANTRI.\n\n'
+        + '\u2022 Data lama : ' + lama.length + ' santri\n'
+        + '\u2022 Data baru : ' + arr.length + ' santri\n';
+      if(nisDobel) pesan += '\u2022 Peringatan: ' + nisDobel + ' NIS/NIPD ganda di file ini\n';
+      if(hilang.length){
+        pesan += '\n' + hilang.length + ' santri lama TIDAK ada di file ini dan akan dihapus\n'
+          + 'beserta nilai, status kartu, dan catatan rapornya:\n'
+          + hilang.slice(0,8).map(s=>'   \u2013 '+s.nama+(s.nis?' ('+s.nis+')':'')).join('\n')
+          + (hilang.length>8 ? '\n   \u2026 dan ' + (hilang.length-8) + ' lainnya' : '') + '\n';
+      }
+      pesan += '\nSantri yang NIS/NIPD atau namanya sama akan dipertahankan\nlengkap dengan nilai, kartu, dan catatan rapornya.\n\nLanjutkan?';
+      if(!confirm(pesan)) { toast('Impor dibatalkan.'); return; }
+
+      // --- pindahkan data lama ke identitas baru (cocok lewat NIS, lalu nama) ---
+      const oldByNis={}, oldByNm={};
+      lama.forEach(s=>{ const n=String(s.nis||'').trim(); if(n && !oldByNis[n]) oldByNis[n]=s; if(!oldByNm[norm(s.nama)]) oldByNm[norm(s.nama)]=s; });
+      const oldNilai = state.nilai || {}, oldKartu = state.kartu || {};
+      const RAPOR_FIELDS = ['level','sakit','izin','alpa','prestasi','catatan'];
+      const nilai={}, kartu={}; let terbawa=0;
+      arr.forEach(s=>{
+        const o = (s.nis && oldByNis[s.nis]) || oldByNm[norm(s.nama)];
+        if(!o) return;
+        terbawa++;
+        if(oldNilai[o.id]) nilai[s.id] = oldNilai[o.id];
+        if(oldKartu[o.id]) kartu[s.id] = oldKartu[o.id];
+        RAPOR_FIELDS.forEach(f=>{ if(o[f]!==undefined && o[f]!=='' && o[f]!==null) s[f]=o[f]; });
+      });
+
+      // --- ganti total, lalu bersihkan sisa yang yatim ---
+      state.santri = arr; state.nilai = nilai; state.kartu = kartu;
+      normalizeState();
+      const sisa = bersihkanOrphans(true);
+      save(); renderKelola();
+      if($('#page-nilai').classList.contains('active')) renderNilaiPage();
+      if($('#page-kartu').classList.contains('active')) renderKartuPage();
+      const info = [arr.length+' santri masuk'];
+      if(terbawa) info.push(terbawa+' data lama dipertahankan');
+      if(hilang.length) info.push(hilang.length+' dihapus');
+      if(skipped) info.push(skipped+' baris kosong dilewati');
+      if(sisa && sisa.__total) info.push(sisa.__total+' data mengendap dibersihkan');
+      toast('Impor santri: '+info.join(' \u00b7 ')+'.');
     }catch(err){ alert('Gagal impor santri. '+(err&&err.message?err.message:'')); }
   };
   reader.readAsArrayBuffer(file);
@@ -2672,12 +3326,11 @@ function importExcel(file){
       // pertahankan data santri & nilai yang sudah ada (impor ini hanya untuk jadwal)
       ns.kelas = Array.isArray(state.kelas) && state.kelas.length ? state.kelas : DEFAULT_KELAS.slice();
       ns.santri = Array.isArray(state.santri) ? state.santri : [];
+      ns.kartu = (state.kartu && typeof state.kartu==='object') ? state.kartu : {};
       ns.nilai = (state.nilai && typeof state.nilai==='object') ? state.nilai : {};
       ns.rapor = (state.rapor && typeof state.rapor==='object') ? state.rapor : {};
       state = ns;
-      ['kelas','hari','slot','ustadz','pelajaran','jadwal','santri','tempat'].forEach(k=>{ if(!Array.isArray(state[k])) state[k]=[]; });
-      if(!state.kelas.length) state.kelas = DEFAULT_KELAS.slice();
-      if(!state.nilai || typeof state.nilai!=='object') state.nilai={};
+      normalizeState();
       save(); curKelas=state.kelas[0]; curUstadz=null; curTempatKelas=state.kelas[0]; curRekapKelas=state.kelas[0]; renderKelola(); go('jadwal');
       toast('Impor selesai: '+added+' baris'+(skipped?', '+skipped+' dilewati':'')+'.');
     }catch(err){ alert('Gagal impor. '+(err&&err.message?err.message:'Format file tidak dikenali.')); }
@@ -2995,15 +3648,19 @@ $('#inKelas').addEventListener('keydown', e=>{ if(e.key==='Enter') $('#addKelas'
 $('#addSantri').addEventListener('click', ()=>{
   const nama=$('#inSantri').value.trim(); if(!nama){ toast('Isi nama santri.'); return; }
   const ngaji=$('#inSantriNgaji').value || state.kelas[0];
-  state.santri.push({id:uid(), nama, ngaji});
-  $('#inSantri').value=''; save(); renderKelola(); $('#inSantri').focus();
+  const nis=($('#inSantriNis')?$('#inSantriNis').value:'').trim();
+  if(nis && state.santri.some(x=>String(x.nis||'').trim()===nis)){ toast('NIS/NIPD '+nis+' sudah dipakai.'); return; }
+  state.santri.push({id:uid(), nama, ngaji, nis});
+  $('#inSantri').value=''; if($('#inSantriNis')) $('#inSantriNis').value='';
+  save(); renderKelola(); $('#inSantri').focus();
 });
 $('#inSantri').addEventListener('keydown', e=>{ if(e.key==='Enter') $('#addSantri').click(); });
+if($('#inSantriNis')) $('#inSantriNis').addEventListener('keydown', e=>{ if(e.key==='Enter') $('#addSantri').click(); });
 $('#btnTemplateSantri').addEventListener('click', templateSantri);
 $('#btnExportSantri').addEventListener('click', exportSantri);
 $('#fileSantri').addEventListener('change', e=>{
   const f=e.target.files[0]; if(!f) return;
-  if(confirm('Impor akan MENGGANTI seluruh data santri saat ini. Lanjutkan?')) importSantri(f);
+  importSantri(f);   // konfirmasi lengkap ditampilkan setelah file dibaca
   e.target.value='';
 });
 $('#addSlot').addEventListener('click', ()=>{
@@ -3051,7 +3708,9 @@ $('#eFields').addEventListener('click', e=>{
   $$('#eSwatches .swatch').forEach(x=>x.classList.toggle('on', x===sw));
 });
 $('#eFields').addEventListener('keydown', e=>{ if(e.key==='Enter' && e.target.id==='eNama'){ e.preventDefault(); saveEdit(); } });
-$('#btnSeed').addEventListener('click', ()=>{ if(confirm('Muat data contoh? Ini menimpa data saat ini.')){ seed(); renderKelola(); toast('Contoh dimuat.'); } });$('#btnReset').addEventListener('click', ()=>{ if(confirm('Hapus SEMUA data? Tidak bisa dibatalkan.')){ state={kelas:DEFAULT_KELAS.slice(),hari:[],slot:[],ustadz:[],pelajaran:[],jadwal:[],santri:[],nilai:{},rapor:{},tempat:[]}; normalizeState(); curKelas=null; curNilaiKelas=null; curTempatKelas=null; curRekapKelas=null; save(); renderKelola(); toast('Semua data dihapus.'); } });
+$('#btnScanOrphan').addEventListener('click', ()=>{ const r=renderOrphanInfo(); toast(r.__total ? 'Ditemukan '+r.__total+' data mengendap.' : 'Sudah bersih.'); });
+$('#btnCleanOrphan').addEventListener('click', ()=>bersihkanOrphans(false));
+$('#btnSeed').addEventListener('click', ()=>{ if(confirm('Muat data contoh? Ini menimpa data saat ini.')){ seed(); renderKelola(); toast('Contoh dimuat.'); } });$('#btnReset').addEventListener('click', ()=>{ if(confirm('Hapus SEMUA data? Tidak bisa dibatalkan.')){ state={kelas:DEFAULT_KELAS.slice(),hari:[],slot:[],ustadz:[],pelajaran:[],jadwal:[],santri:[],nilai:{},rapor:{},tempat:[],kartu:{}}; normalizeState(); curKelas=null; curNilaiKelas=null; curTempatKelas=null; curRekapKelas=null; save(); renderKelola(); toast('Semua data dihapus.'); } });
 $('#btnTemplate').addEventListener('click', downloadTemplate);
 $('#fbConnect').addEventListener('click', async ()=>{
   try{
@@ -3072,17 +3731,238 @@ $('#fileImport').addEventListener('change', e=>{
   e.target.value='';
 });
 
+/* =====================================================================
+   KARTU SANTRI \u2014 interaksi halaman
+   ===================================================================== */
+$('#page-kartu').addEventListener('click', e=>{
+  const tab = e.target.closest('.tab[data-kk]');
+  if(tab){ curKartuKelas = tab.dataset.kk; renderKartuPage(); return; }
+  const tg = e.target.closest('.ktog');
+  if(tg){
+    const id = tg.dataset.ks, f = tg.dataset.kf;
+    const cur = kOf(id), patch = {};
+    patch[f] = !cur[f];
+    kSet(id, patch); save();
+    renderKartuBanner(); renderKartuStat(); renderKartuList();
+    return;
+  }
+  const pb = e.target.closest('.ki-print');
+  if(pb){
+    const s = santriById(pb.dataset.kp); if(!s) return;
+    if(!String(s.nis||'').trim()){ toast('Isi NIS/NIPD santri ini dulu di Kelola \u2192 Santri.'); }
+    openKartuCards([s], 'Kartu \u2014 '+s.nama);
+    return;
+  }
+});
+$('#page-kartu').addEventListener('change', e=>{
+  const n = e.target.closest('.ki-note');
+  if(!n) return;
+  const v = String(n.value||'').trim().slice(0,120);
+  n.value = v;
+  kSet(n.dataset.kn, {keluhan:v});
+  save();
+  n.classList.toggle('filled', !!v);
+  renderKartuStat();
+});
+$('#page-kartu').addEventListener('keydown', e=>{ if(e.key==='Enter' && e.target.classList.contains('ki-note')) e.target.blur(); });
+$('#searchKartu').addEventListener('input', renderKartuList);
+$('#filterKartu').addEventListener('change', renderKartuList);
+$('#btnTemplateKartu').addEventListener('click', templateKartu);
+$('#btnExportKartu').addEventListener('click', exportKartu);
+$('#fileKartu').addEventListener('change', e=>{
+  const f = e.target.files[0]; if(!f) return;
+  if(confirm('Impor hanya mengubah STATUS KARTU (punya/bayar/hilang/keluhan). Data santri tidak berubah. Lanjutkan?')) importKartu(f);
+  e.target.value='';
+});
+$('#btnCetakHilang').addEventListener('click', ()=>{
+  const list = kartuScope().filter(s=>kOf(s.id).hilang);
+  if(!list.length){ toast('Tidak ada kartu yang ditandai hilang.'); return; }
+  const tanpaNis = list.filter(s=>!String(s.nis||'').trim()).length;
+  if(tanpaNis && !confirm(tanpaNis+' dari '+list.length+' santri belum punya NIS/NIPD sehingga barcode-nya kosong. Tetap cetak?')) return;
+  openKartuCards(list, 'Kartu pengganti \u2014 '+list.length+' santri');
+});
+$('#kartuClose').addEventListener('click', closeKartuCards);
+$('#kartuPrint').addEventListener('click', ()=>window.print());
+
+/* =====================================================================
+   AUTENTIKASI (Firebase Authentication)
+   ===================================================================== */
+const LAST_USER_KEY = 'aturNgaji.lastUser';
+let fbAuth = null, authUser = null, offlineMode = false;
+
+function authShow(){ const a=$('#authScreen'); if(a){ a.classList.remove('hidden'); } }
+function authHide(){ const a=$('#authScreen'); if(a){ a.classList.add('hidden'); } }
+function authMsg(txt, kind){
+  const el = $('#auMsg'); if(!el) return;
+  if(!txt){ el.className='auth-msg'; el.innerHTML=''; return; }
+  el.className = 'auth-msg show ' + (kind||'info');
+  el.innerHTML = txt;
+}
+function authBusy(on){
+  const b = $('#auLogin'); if(!b) return;
+  b.classList.toggle('busy', !!on); b.disabled = !!on;
+  const t = $('#auLoginTx'); if(t) t.textContent = on ? 'Memproses\u2026' : 'Masuk';
+}
+function authErrText(err){
+  const c = (err && err.code) ? err.code : '';
+  const map = {
+    'auth/invalid-email':'Format email tidak benar.',
+    'auth/missing-password':'Kata sandi belum diisi.',
+    'auth/user-not-found':'Email atau kata sandi salah.',
+    'auth/wrong-password':'Email atau kata sandi salah.',
+    'auth/invalid-credential':'Email atau kata sandi salah.',
+    'auth/invalid-login-credentials':'Email atau kata sandi salah.',
+    'auth/user-disabled':'Akun ini dinonaktifkan. Hubungi admin.',
+    'auth/too-many-requests':'Terlalu banyak percobaan gagal. Tunggu beberapa menit lalu coba lagi.',
+    'auth/network-request-failed':'Tidak ada koneksi internet. Sambungkan dulu lalu coba lagi.',
+    'auth/operation-not-allowed':'Metode <b>Email/Password</b> belum diaktifkan di Firebase Console \u2192 Authentication \u2192 Sign-in method.',
+    'auth/unauthorized-domain':'Domain ini belum diizinkan. Tambahkan di Firebase Console \u2192 Authentication \u2192 Settings \u2192 Authorized domains.'
+  };
+  return map[c] || ('Gagal masuk. ' + (c || (err && err.message) || 'Coba lagi.'));
+}
+async function doLogin(){
+  const em = $('#auEmail').value.trim(), pw = $('#auPass').value;
+  if(!em){ authMsg('Isi email dulu.','err'); $('#auEmail').focus(); return; }
+  if(!pw){ authMsg('Isi kata sandi dulu.','err'); $('#auPass').focus(); return; }
+  if(!fbAuth){ authMsg('Firebase belum siap. Periksa koneksi internet lalu muat ulang halaman.','err'); return; }
+  authBusy(true); authMsg('');
+  try{ await fbAuth.signInWithEmailAndPassword(em, pw); }
+  catch(err){ authMsg(authErrText(err),'err'); }
+  finally{ authBusy(false); }
+}
+async function doForgot(){
+  const em = $('#auEmail').value.trim();
+  if(!em){ authMsg('Isi email dulu, lalu tekan \u201cLupa kata sandi?\u201d.','err'); $('#auEmail').focus(); return; }
+  if(!fbAuth){ authMsg('Firebase belum siap. Periksa koneksi internet.','err'); return; }
+  try{
+    await fbAuth.sendPasswordResetEmail(em);
+    authMsg('Tautan atur ulang kata sandi sudah dikirim ke <b>'+escAttr(em)+'</b>. Cek kotak masuk atau folder spam.','ok');
+  }catch(err){ authMsg(authErrText(err),'err'); }
+}
+async function doLogout(){
+  closeAcct();
+  if(!confirm('Keluar dari aplikasi? Data tetap tersimpan di HP ini.')) return;
+  try{ if(fbAuth) await fbAuth.signOut(); }catch(e){}
+  offlineMode = false;
+  cloudDetach();
+  authShow();
+}
+function onSignedIn(u){
+  authUser = u;
+  offlineMode = false;
+  try{ localStorage.setItem(LAST_USER_KEY, u.email||''); }catch(e){}
+  if($('#acctEmail')) $('#acctEmail').textContent = u.email || u.uid;
+  if($('#acctState')) $('#acctState').textContent = 'Sudah masuk';
+  authBusy(false); authMsg(''); $('#auPass').value='';
+  authHide();
+  if(cloudCfg && !cloudOn) cloudConnect();
+  renderActivePage();
+}
+function onSignedOut(){
+  authUser = null;
+  cloudDetach();
+  if($('#acctEmail')) $('#acctEmail').textContent = '\u2014';
+  if($('#acctState')) $('#acctState').textContent = 'Belum masuk';
+  if($('#auPass')) $('#auPass').value = '';
+  authBusy(false);
+  if(!offlineMode) authShow();
+}
+async function authBoot(){
+  let last = '';
+  try{ last = localStorage.getItem(LAST_USER_KEY) || ''; }catch(e){}
+  if(last && $('#auEmail')) $('#auEmail').value = last;
+  authShow();
+  authMsg('Menyiapkan\u2026','info');
+  try{
+    await loadFirebaseSDK();
+    if(!firebase.apps.length) firebase.initializeApp(cloudCfg || EMBED_FIREBASE.config);
+    fbAuth = firebase.auth();
+    try{ await fbAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL); }catch(e){}
+    authMsg('');
+    fbAuth.onAuthStateChanged(u=>{ if(u) onSignedIn(u); else onSignedOut(); });
+  }catch(err){
+    authMsg('Tidak bisa memuat Firebase. Periksa koneksi internet, lalu muat ulang halaman.','err');
+    if(last && $('#auOffline')) $('#auOffline').classList.add('show');
+  }
+}
+function enterOffline(){
+  offlineMode = true;
+  authHide();
+  toast('Mode tanpa koneksi \u2014 perubahan disimpan di HP ini saja.');
+}
+$('#auLogin').addEventListener('click', doLogin);
+$('#auPass').addEventListener('keydown', e=>{ if(e.key==='Enter') doLogin(); });
+$('#auEmail').addEventListener('keydown', e=>{ if(e.key==='Enter') $('#auPass').focus(); });
+$('#auForgot').addEventListener('click', doForgot);
+$('#auOffline').addEventListener('click', enterOffline);
+$('#auEye').addEventListener('click', ()=>{
+  const p = $('#auPass'); const show = p.type==='password';
+  p.type = show ? 'text' : 'password';
+  $('#auEye').textContent = show ? 'Tutup' : 'Lihat';
+});
+
+/* ---- Menu akun di topbar ---- */
+function openAcct(){ $('#acctMenu').classList.add('show'); $('#wsBackdrop').classList.add('show'); }
+function closeAcct(){ if($('#acctMenu')) $('#acctMenu').classList.remove('show'); if($('#wsBackdrop')) $('#wsBackdrop').classList.remove('show'); }
+$('#btnAcct').addEventListener('click', e=>{ e.stopPropagation(); closeWsMenu(); if($('#acctMenu').classList.contains('show')) closeAcct(); else openAcct(); });
+$('#wsBackdrop').addEventListener('click', closeAcct);
+$('#acctLogout').addEventListener('click', doLogout);
+$('#acctSync').addEventListener('click', ()=>{ closeAcct(); go('kelola'); setTimeout(()=>{ const p=$('#fbStatus'); if(p && p.scrollIntoView) p.scrollIntoView({behavior:'smooth',block:'center'}); }, 80); });
+
+/* =====================================================================
+   PWA \u2014 pasang sebagai aplikasi HP + service worker
+   ===================================================================== */
+let deferredPrompt = null;
+const isIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent);
+const isStandalone = () => (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
+function showInstallUI(on, iosMode){
+  const card = $('#auInstall'), btn = $('#auInstallBtn'), tx = $('#auInstallTx'), mi = $('#acctInstall');
+  if(card) card.style.display = on ? '' : 'none';
+  if(mi) mi.style.display = on ? '' : 'none';
+  if(iosMode){
+    if(tx) tx.innerHTML = 'Di iPhone/iPad: buka lewat <b>Safari</b>, tekan tombol <b>Bagikan</b> di bawah, lalu pilih <b>Tambah ke Layar Utama</b>.';
+    if(btn) btn.style.display = 'none';
+  } else if(btn){ btn.style.display = ''; }
+}
+function pwaInit(){
+  if(isStandalone()){ showInstallUI(false); return; }
+  if(isIOS()) showInstallUI(true, true);
+}
+window.addEventListener('beforeinstallprompt', e=>{ e.preventDefault(); deferredPrompt = e; if(!isStandalone()) showInstallUI(true, false); });
+window.addEventListener('appinstalled', ()=>{ deferredPrompt=null; showInstallUI(false); toast('Aplikasi berhasil dipasang.'); });
+async function doInstall(){
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    try{ await deferredPrompt.userChoice; }catch(e){}
+    deferredPrompt = null; showInstallUI(false);
+    return;
+  }
+  if(isIOS()){ alert('Buka halaman ini di Safari, tekan tombol Bagikan (kotak dengan panah ke atas), lalu pilih \u201cTambah ke Layar Utama\u201d.'); return; }
+  alert('Buka menu browser (titik tiga) lalu pilih \u201cInstal aplikasi\u201d atau \u201cTambahkan ke layar utama\u201d.');
+}
+$('#auInstallBtn').addEventListener('click', doInstall);
+$('#acctInstall').addEventListener('click', ()=>{ closeAcct(); doInstall(); });
+
+function registerSW(){
+  if(!('serviceWorker' in navigator)) return;
+  if(location.protocol !== 'https:' && location.hostname !== 'localhost') return;
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('./sw.js').catch(()=>{}); });
+}
+
 // ---- Boot ----
 if(!load()) seed();
 normalizeState();
 curKelas = state.kelas[0]; curNilaiKelas = state.kelas[0]; curTempatKelas = state.kelas[0]; curRekapKelas = state.kelas[0];
+curKartuKelas = '__all';
 setWorkspace('jadwal');
 // sinkronisasi online: pakai konfigurasi tersimpan, atau yang tertanam
 if(!loadCloudCfg() && EMBED_FIREBASE && EMBED_FIREBASE.config){
   cloudCfg = EMBED_FIREBASE.config; cloudKode = sanitizeKode(EMBED_FIREBASE.kode || 'utama'); saveCloudCfg();
 }
 renderCloudPanel();
-if(cloudCfg) cloudConnect();
+pwaInit();
+registerSW();
+authBoot();   // sinkronisasi online dijalankan setelah berhasil masuk
 </script>
 </body>
 </html>
