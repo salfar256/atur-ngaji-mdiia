@@ -134,6 +134,8 @@
   .modal .ctx b{color:var(--ink); font-weight:700;}
   .lbl{display:block; font-size:12px; font-weight:700; color:var(--ink); margin:14px 0 8px; letter-spacing:.02em;}
   .lbl-sel{font-weight:600; color:var(--brass); margin-left:4px;}
+  .field textarea{width:100%; padding:12px 13px; border:1px solid var(--line-strong); border-radius:11px; background:var(--surface); color:var(--text); font:inherit; resize:vertical; line-height:1.5;}
+  .field textarea:focus{outline:none; border-color:var(--ink); box-shadow:0 0 0 3px rgba(20,83,45,.10);}
   .field input,.field select{width:100%; padding:12px 13px; border:1px solid var(--line-strong); border-radius:11px; background:var(--surface); color:var(--text); appearance:none;}
   .field input:focus,.field select:focus{outline:none; border-color:var(--ink); box-shadow:0 0 0 3px rgba(20,83,45,.10);}
 
@@ -1142,10 +1144,9 @@
 </div>
 
 <!-- FORM KWITANSI -->
-<div class="modal-backdrop" id="kwBackdrop"></div>
-<div class="modal" id="kwModal">
-  <div class="mhead"><span id="kwTitle">Kwitansi pembayaran</span><button class="mx" id="kwX">&times;</button></div>
-  <div class="mbody">
+<div class="modal-bg" id="kwBg">
+  <div class="modal" id="kwModal">
+    <h2 id="kwTitle">Kwitansi pembayaran</h2>
     <div class="kw-who" id="kwWho"></div>
     <span class="lbl">Keterangan pembayaran</span>
     <div class="field"><input id="kwKet" placeholder="mis. Pembayaran Kartu Santri" /></div>
@@ -1163,10 +1164,10 @@
       <option value="3">3 lembar &mdash; pembayar + admin + arsip</option>
     </select></div>
     <label class="kw-chk"><input type="checkbox" id="kwTandai" checked /> <span>Tandai santri ini <b>sudah bayar kartu</b></span></label>
-  </div>
-  <div class="mfoot">
-    <button class="btn-line" id="kwCancel">Batal</button>
-    <button class="btn-solid" id="kwPrint">Cetak kwitansi</button>
+    <div class="modal-actions">
+      <button class="btn-line" id="kwCancel">Batal</button>
+      <button class="btn-primary" id="kwPrint">Cetak kwitansi</button>
+    </div>
   </div>
 </div>
 
@@ -2741,10 +2742,9 @@ function openKwitansi(sid){
   $('#kwTandai').checked = !!s;
   $('#kwTandai').closest('.kw-chk').style.display = s ? '' : 'none';
   kwBilUpdate();
-  $('#kwBackdrop').classList.add('show');
-  $('#kwModal').classList.add('show');
+  $('#kwBg').classList.add('show');
 }
-function closeKwitansi(){ $('#kwBackdrop').classList.remove('show'); $('#kwModal').classList.remove('show'); kwSantriId=null; }
+function closeKwitansi(){ $('#kwBg').classList.remove('show'); kwSantriId=null; }
 function kwBilUpdate(){
   const n = +angkaSaja($('#kwNominal').value) || 0;
   $('#kwBil').textContent = n ? terbilangRupiah(n) : '\u2014';
@@ -4261,7 +4261,7 @@ $('#page-kartu').addEventListener('change', e=>{
   renderKartuStat();
 });
 $('#page-kartu').addEventListener('keydown', e=>{ if(e.key==='Enter' && e.target.classList.contains('ki-note')) e.target.blur(); });
-document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ if($('#kwModal').classList.contains('show')) closeKwitansi(); else if($('#strukOverlay').classList.contains('show')) closeStruk(); } });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ if($('#kwBg').classList.contains('show')) closeKwitansi(); else if($('#strukOverlay').classList.contains('show')) closeStruk(); } });
 $('#searchKartu').addEventListener('input', renderKartuList);
 $('#filterKartu').addEventListener('change', renderKartuList);
 $('#btnTemplateKartu').addEventListener('click', templateKartu);
@@ -4278,9 +4278,8 @@ $('#btnCetakHilang').addEventListener('click', ()=>{
   if(tanpaNis && !confirm(tanpaNis+' dari '+list.length+' santri belum punya NIS/NIPD sehingga barcode-nya kosong. Tetap cetak?')) return;
   openKartuCards(list, 'Kartu pengganti \u2014 '+list.length+' santri');
 });
-$('#kwX').addEventListener('click', closeKwitansi);
 $('#kwCancel').addEventListener('click', closeKwitansi);
-$('#kwBackdrop').addEventListener('click', closeKwitansi);
+$('#kwBg').addEventListener('click', e=>{ if(e.target === $('#kwBg')) closeKwitansi(); });
 $('#kwPrint').addEventListener('click', cetakKwitansi);
 $('#kwNominal').addEventListener('input', e=>{
   const pos = e.target.value.length - e.target.selectionStart;
