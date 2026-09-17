@@ -3,11 +3,11 @@
    Naikkan angka VERSI di bawah setiap kali index.html diperbarui,
    supaya semua HP mengambil versi terbaru.
    ===================================================================== */
-const VERSI = 'v2';
+const VERSI = 'v3';
 const CACHE_APP = 'atur-ngaji-app-' + VERSI;
 const CACHE_LIB = 'atur-ngaji-lib-' + VERSI;
 
-const ASSETS = ['./', './index.html', './manifest.json', './icon.svg'];
+const ASSETS = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png', './icon-maskable-512.png'];
 
 /* Host pustaka luar yang boleh disimpan agar aplikasi tetap jalan offline */
 const LIB_HOSTS = [

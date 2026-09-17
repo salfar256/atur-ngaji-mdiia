@@ -1,7 +1,7 @@
 {
   "name": "Atur Ngaji MDIIA",
   "short_name": "Atur Ngaji",
-  "description": "Jadwal ngaji, nilai & rapor, dan data kartu santri MDIIA (Ma'had Ad-Dirasah Al-Islamiyyah Ibnu Aqil).",
+  "description": "Jadwal ngaji, nilai & rapor, data kartu santri, dan kwitansi pembayaran MDIIA (Ma'had Ad-Dirasah Al-Islamiyyah Ibnu Aqil).",
   "lang": "id",
   "dir": "ltr",
   "start_url": "./",
@@ -14,17 +14,8 @@
   "theme_color": "#14532D",
   "categories": ["education", "productivity"],
   "icons": [
-    {
-      "src": "./icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any"
-    },
-    {
-      "src": "./icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "maskable"
-    }
+    { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }
