@@ -9,7 +9,7 @@
   "id": "./",
   "display": "standalone",
   "display_override": ["standalone", "minimal-ui"],
-  "orientation": "portrait-primary",
+  "orientation": "any",
   "background_color": "#FAF8F3",
   "theme_color": "#14532D",
   "categories": ["education", "productivity"],
