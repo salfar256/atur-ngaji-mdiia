@@ -533,6 +533,15 @@
   .struk-scroll{flex:1; overflow-y:auto; padding:16px 12px 28px; background:#E7E3D9; display:flex; flex-direction:column; align-items:center; gap:0;}
   .struk-acts{display:flex; gap:7px; align-items:center;}
   .rapor-print.rawbt{background:#B45309;}
+  .struk-next{display:none; width:100%; max-width:420px; background:#FBF1E5; border:1px solid #E7C89A; border-radius:14px; padding:14px 15px; margin-bottom:12px; box-shadow:0 4px 14px rgba(0,0,0,.08);}
+  .struk-next.show{display:block;}
+  .struk-next b{display:block; font-size:14px; color:#92400E; line-height:1.35;}
+  .struk-next p{margin:5px 0 0; font-size:12.5px; color:#7C5B22; line-height:1.5;}
+  .struk-next .sn-go{width:100%; margin-top:12px; padding:14px 12px; border-radius:12px; background:#B45309; color:#fff; font-weight:700; font-size:14px; line-height:1.35;}
+  .struk-next .sn-skip{width:100%; margin-top:8px; padding:11px; border-radius:11px; border:1px solid #E7C89A; color:#7C5B22; font-weight:600; font-size:12.5px;}
+  .sheet-terpisah .s-cut{display:none;}
+  .struk.terkirim{position:relative; opacity:.55;}
+  .struk.terkirim:after{content:'\2713 Sudah dikirim'; position:absolute; top:6px; right:6px; background:#15803D; color:#fff; font-size:2.4mm; font-weight:700; padding:1mm 2mm; border-radius:1.4mm; font-family:inherit;}
   .struk-hint{font-size:12.5px; color:var(--muted); text-align:center; max-width:420px; line-height:1.55; margin-bottom:12px; background:var(--surface); border-radius:12px; padding:10px 13px;}
   .struk{width:58mm; background:#fff; color:#000; box-shadow:0 4px 16px rgba(0,0,0,.14); padding:4mm 5mm 3mm; font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace; font-size:2.9mm; line-height:1.45; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
   .struk *{box-sizing:border-box;}
@@ -640,7 +649,10 @@
     /* cetak kwitansi thermal 58mm */
     body.struk-open > *:not(#strukOverlay){display:none!important;}
     body.struk-open #strukOverlay{position:static; display:block; background:#fff;}
-    body.struk-open .rapor-bar, body.struk-open .struk-hint, body.struk-open .struk-gap{display:none!important;}
+    body.struk-open .rapor-bar, body.struk-open .struk-hint, body.struk-open .struk-gap, body.struk-open .struk-next{display:none!important;}
+    body.struk-open .struk.terkirim{opacity:1;}
+    body.struk-open .s-cut{display:block!important;}
+    body.struk-open .struk.terkirim:after{display:none;}
     body.struk-open, body.struk-open html{width:58mm!important; margin:0!important; padding:0!important; background:#fff;}
     body.struk-open .struk-scroll{overflow:visible; padding:0; margin:0; display:block; background:#fff; width:58mm;}
     body.struk-open .struk{box-shadow:none; width:58mm; max-width:58mm; margin:0; padding:2mm 5mm 0; break-inside:avoid;}
@@ -2734,11 +2746,15 @@ function openStruk(d){
   const pakaiRawbt = isAndroid();
   if($('#strukRawbt')) $('#strukRawbt').style.display = pakaiRawbt ? '' : 'none';
   let html = pakaiRawbt
-    ? '<p class="struk-hint"><b>Di HP, tekan tombol RawBT (oranye)</b> \u2014 struk dikirim langsung ke printer tanpa lewat dialog cetak, jadi hasilnya pasti pas. Tombol <b>Cetak</b> memakai dialog Chrome dan sering meleset di printer thermal.</p>'
+    ? '<p class="struk-hint"><b>Di HP, tekan tombol RawBT (oranye)</b> \u2014 struk dikirim langsung ke printer tanpa lewat dialog cetak.'
+      + (n > 1 ? ' Lembar dicetak <b>satu per satu</b>: lembar pembayar dulu, lalu muncul tombol untuk melanjutkan ke lembar berikutnya setelah kertas disobek.' : '')
+      + '</p>'
     : '<p class="struk-hint">Pilih printer thermal, ukuran kertas <b>58&nbsp;mm</b>, margin <b>None/0</b>, dan skala <b>100%</b>. '
       + n + ' lembar tercetak sekaligus dalam satu kali perintah cetak.</p>';
   for(let i=1;i<=n;i++) html += strukHTML(d, i, n);
-  $('#strukSheet').innerHTML = html;
+  strukLembarBerikut = 1;
+  $('#strukSheet').className = 'struk-scroll' + (pakaiRawbt ? ' sheet-terpisah' : '');
+  $('#strukSheet').innerHTML = '<div class="struk-next" id="strukNext"></div>' + html;
   $('#strukTitle').textContent = 'Kwitansi \u00b7 ' + d.nomor;
   $('#strukOverlay').classList.add('show');
   document.body.classList.add('struk-open');
@@ -2879,7 +2895,7 @@ function bytesToB64(arr){
 }
 
 /* ---- satu lembar struk dalam ESC/POS ---- */
-function escposRingkas(e, d, lembarKe, totalLembar){
+function escposRingkas(e, d, lembarKe, totalLembar, sendiri){
   const c = kw();
   const wkt = d.waktu;
   const label = LEMBAR_LABEL[lembarKe-1] || ('LEMBAR ' + lembarKe);
@@ -2895,14 +2911,14 @@ function escposRingkas(e, d, lembarKe, totalLembar){
   e.align(1).bold(true).size(2,2).ln(rupiah(d.nominal)).size(1,1).bold(false);
   e.align(0).rule('-');
   e.ln('Diterima: ' + ascii(d.pencatat));
-  if(lembarKe < totalLembar) e.align(1).feed(1).ln('- - - potong di sini - - -').feed(2);
+  if(!sendiri && lembarKe < totalLembar) e.align(1).feed(1).ln('- - - potong di sini - - -').feed(2);
   else e.feed(4);
   e.align(0).init();
   return e;
 }
-function escposStruk(e, d, lembarKe, totalLembar){
+function escposStruk(e, d, lembarKe, totalLembar, sendiri){
   const c = kw();
-  if(c.ringkas && lembarKe > 1) return escposRingkas(e, d, lembarKe, totalLembar);
+  if(c.ringkas && lembarKe > 1) return escposRingkas(e, d, lembarKe, totalLembar, sendiri);
   const wkt = d.waktu;
   const label = LEMBAR_LABEL[lembarKe-1] || ('LEMBAR ' + lembarKe);
 
@@ -2930,7 +2946,7 @@ function escposStruk(e, d, lembarKe, totalLembar){
   e.bold(true).ln(ascii(d.pencatat)).bold(false);
   e.align(1).rule('-');
   e.font(1).ln('Simpan sebagai bukti pembayaran yang sah.').font(0);
-  if(lembarKe < totalLembar){
+  if(!sendiri && lembarKe < totalLembar){
     e.ln('- - - potong di sini - - -').feed(2);
   } else {
     e.feed(4);
@@ -2944,14 +2960,39 @@ function escposSemua(d){
   for(let i=1;i<=n;i++) escposStruk(e, d, i, n);
   return e.b;
 }
+function escposSatu(d, lembarKe){
+  const n = Math.max(1, Math.min(3, +d.rangkap || 1));
+  const e = new EscPos();
+  escposStruk(e, d, Math.max(1, Math.min(n, lembarKe)), n, true);
+  return e.b;
+}
 
 /* ---- kirim ke RawBT ---- */
 function navigateTo(url){ window.location.href = url; }
 let strukTerakhir = null;
+let strukLembarBerikut = 1;
+function strukTotalLembar(){ return strukTerakhir ? Math.max(1, Math.min(3, +strukTerakhir.rangkap || 1)) : 1; }
+function renderStrukNext(){
+  const box = $('#strukNext'); if(!box) return;
+  const total = strukTotalLembar();
+  const n = strukLembarBerikut;
+  if(!strukTerakhir || !isAndroid() || n > total){ box.classList.remove('show'); box.innerHTML=''; return; }
+  if(n === 1){ box.classList.remove('show'); box.innerHTML=''; return; }
+  const label = LEMBAR_LABEL[n-1] || ('LEMBAR '+n);
+  box.innerHTML = '<b>Lembar '+(n-1)+'/'+total+' sudah dikirim ke printer.</b>'
+    + '<p>Sobek dulu kertas yang sudah keluar, lalu lanjutkan.</p>'
+    + '<button class="sn-go" id="strukNextGo">Lanjut cetak lembar '+n+'/'+total+' \u00b7 '+escAttr(label)+'</button>'
+    + '<button class="sn-skip" id="strukNextSkip">Selesai, tidak perlu lembar berikutnya</button>';
+  box.classList.add('show');
+  $('#strukNextGo').addEventListener('click', kirimRawBT);
+  $('#strukNextSkip').addEventListener('click', ()=>{ strukLembarBerikut = strukTotalLembar() + 1; renderStrukNext(); toast('Selesai.'); });
+}
 function kirimRawBT(){
   if(!strukTerakhir){ toast('Buat kwitansinya dulu.'); return; }
+  const total = strukTotalLembar();
+  const n = Math.min(strukLembarBerikut, total);
   let url;
-  try{ url = 'rawbt:base64,' + bytesToB64(escposSemua(strukTerakhir)); }
+  try{ url = 'rawbt:base64,' + bytesToB64(escposSatu(strukTerakhir, n)); }
   catch(err){ toast('Gagal menyiapkan data cetak.'); return; }
   let pindah = false;
   const tandai = ()=>{ pindah = true; };
@@ -2959,6 +3000,10 @@ function kirimRawBT(){
   window.addEventListener('blur', tandai);
   try{ navigateTo(url); }
   catch(err){ toast('Perangkat ini tidak mengenali RawBT.'); return; }
+  strukLembarBerikut = n + 1;
+  renderStrukNext();
+  const tandaiLembar = $('#strukSheet').querySelectorAll('.struk')[n-1];
+  if(tandaiLembar) tandaiLembar.classList.add('terkirim');
   setTimeout(()=>{
     document.removeEventListener('visibilitychange', tandai);
     window.removeEventListener('blur', tandai);
