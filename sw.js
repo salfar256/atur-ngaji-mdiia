@@ -3,7 +3,7 @@
    Naikkan angka VERSI di bawah setiap kali index.html diperbarui,
    supaya semua HP mengambil versi terbaru.
    ===================================================================== */
-const VERSI = 'v5';
+const VERSI = 'v7';
 const CACHE_APP = 'atur-ngaji-app-' + VERSI;
 const CACHE_LIB = 'atur-ngaji-lib-' + VERSI;
 

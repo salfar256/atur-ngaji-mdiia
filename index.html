@@ -540,13 +540,13 @@
   .struk .s-logo{width:19mm; height:19mm; object-fit:contain; display:block; margin:0 auto 1.4mm;}
   .struk .s-nm{font-weight:800; font-size:3.05mm; line-height:1.28; letter-spacing:0;}
   .struk .s-sing{font-weight:800; font-size:2.7mm; margin-top:.5mm;}
-  .struk .s-al{font-size:2.35mm; line-height:1.4; margin-top:1mm;}
+  .struk .s-al{font-size:2.2mm; line-height:1.4; margin-top:1mm;}
   .struk .s-hr{border-top:.35mm solid #000; margin:2mm 0;}
   .struk .s-hr2{border-top:.35mm dashed #000; margin:1.8mm 0;}
-  .struk .s-ttl{text-align:center; font-weight:800; font-size:3mm; letter-spacing:.06em; margin:.5mm 0;}
+  .struk .s-ttl{text-align:center; font-weight:800; font-size:2.6mm; letter-spacing:.03em; margin:.5mm 0; white-space:nowrap;}
   .struk .s-lbr{text-align:center; font-size:2.4mm; font-weight:700; margin-bottom:.5mm;}
-  .struk .s-row{display:flex; gap:1.5mm; align-items:baseline; font-size:2.65mm; margin:.5mm 0;}
-  .struk .s-row .k{width:16mm; flex:none;}
+  .struk .s-row{display:flex; gap:1.3mm; align-items:baseline; font-size:2.45mm; margin:.5mm 0;}
+  .struk .s-row .k{width:11.5mm; flex:none;}
   .struk .s-row .k:after{content:':'; float:right;}
   .struk .s-row .v{flex:1; font-weight:700; word-break:break-word;}
   .struk .s-ket{font-size:2.65mm; margin:.6mm 0 0;}
@@ -556,13 +556,22 @@
   .struk .s-tot .vl{font-weight:800; font-size:5mm; line-height:1.2; margin-top:.4mm;}
   .struk .s-bil{font-size:2.4mm; font-style:italic; text-align:center; line-height:1.4; margin-top:.6mm;}
   .struk .s-lunas{text-align:center; font-weight:800; font-size:3mm; letter-spacing:.14em; border:.4mm solid #000; border-radius:1mm; padding:1mm 0; margin:1.6mm 0;}
-  .struk .s-sign{position:relative; text-align:right; margin-top:1.5mm; min-height:26mm;}
+  .struk .s-sign{position:relative; text-align:right; margin-top:1.5mm; min-height:23mm;}
   .struk .s-sign .dt{font-size:2.5mm;}
   .struk .s-sign .jb{font-size:2.5mm; margin-top:.4mm;}
-  .struk .s-sign .nm2{font-weight:800; font-size:2.8mm; margin-top:13mm; text-decoration:underline; text-underline-offset:1mm;}
+  .struk .s-sign .nm2{font-weight:800; font-size:2.8mm; margin-top:11mm; text-decoration:underline; text-underline-offset:1mm;}
   .struk .s-stamp{position:absolute; left:0; bottom:0; width:17mm; height:17mm; object-fit:contain; opacity:.9; transform:rotate(-10deg);}
   .struk .s-foot{text-align:center; font-size:2.3mm; line-height:1.45; margin-top:2mm;}
   .struk .s-cut{text-align:center; font-size:2.5mm; letter-spacing:.02em; padding:3mm 0 1mm; white-space:nowrap;}
+  .struk.ringkas{padding:3.4mm 5mm 2.6mm;}
+  .struk.ringkas .sr-ttl{text-align:center; font-weight:800; font-size:2.9mm; letter-spacing:.05em;}
+  .struk.ringkas .sr-no{text-align:center; font-weight:800; font-size:3.2mm; margin-top:.8mm;}
+  .struk.ringkas .sr-dt{text-align:center; font-size:2.5mm; margin-top:.3mm;}
+  .struk.ringkas .sr-nm{font-weight:800; font-size:3.4mm; line-height:1.2; word-break:break-word;}
+  .struk.ringkas .sr-sub{font-size:2.5mm; margin-top:.4mm;}
+  .struk.ringkas .sr-ket{font-size:2.5mm; margin-top:1mm;}
+  .struk.ringkas .sr-tot{text-align:center; font-weight:800; font-size:4.6mm; line-height:1.2; padding:.6mm 0;}
+  .struk.ringkas .sr-ttd{font-size:2.5mm; margin-top:.6mm;}
   .struk-gap{height:14px;}
 
   /* ============ OVERLAY KARTU (cetak) ============ */
@@ -1030,6 +1039,8 @@
           <option value="2">2 lembar &mdash; pembayar + admin</option>
           <option value="3">3 lembar &mdash; pembayar + admin + arsip</option>
         </select></div>
+        <label class="kw-chk"><input type="checkbox" id="setRingkas" /> <span>Lembar <b>admin &amp; arsip ringkas</b> &mdash; hanya nomor, tanggal, nama, NIS, keterangan, dan nominal. Hemat kertas.</span></label>
+        <div style="height:8px;"></div>
         <label class="kw-chk"><input type="checkbox" id="setLogo" /> <span>Cetak <b>logo</b> di kepala struk</span></label>
         <div style="height:8px;"></div>
         <label class="kw-chk"><input type="checkbox" id="setStempel" /> <span>Cetak <b>stempel</b> di atas tanda tangan</span></label>
@@ -2609,6 +2620,7 @@ const KW_DEFAULT = {
   nominal:25000,
   keterangan:'Pembayaran Kartu Santri',
   rangkap:2,
+  ringkas:true,
   logo:true,
   stempel:true,
   nomor:0
@@ -2653,33 +2665,48 @@ function nomorKwitansi(d, urut){
 
 /* ---- pembuat struk ---- */
 const LEMBAR_LABEL = ['UNTUK PEMBAYAR','UNTUK ADMIN','ARSIP PONDOK'];
+function strukRingkasHTML(d, lembarKe, totalLembar){
+  const c = kw();
+  const wkt = d.waktu;
+  const label = LEMBAR_LABEL[lembarKe-1] || ('LEMBAR '+lembarKe);
+  return '<div class="struk ringkas">'
+    + '<div class="sr-ttl">'+escAttr(c.singkatan || 'MDIIA')+' \u00b7 '+escAttr(label)+'</div>'
+    + '<div class="sr-no">'+escAttr(d.nomor)+'</div>'
+    + '<div class="sr-dt">'+escAttr(tglPendek(wkt))+'</div>'
+    + '<div class="s-hr2"></div>'
+    + '<div class="sr-nm">'+escAttr(d.nama)+'</div>'
+    + '<div class="sr-sub">'+escAttr(String(d.nis||'\u2014'))+' \u00b7 '+escAttr(d.kelas||'\u2014')+'</div>'
+    + '<div class="sr-ket">'+escAttr(d.keterangan)+'</div>'
+    + '<div class="s-hr2"></div>'
+    + '<div class="sr-tot">'+rupiah(d.nominal)+'</div>'
+    + '<div class="s-hr2"></div>'
+    + '<div class="sr-ttd">Diterima: <b>'+escAttr(d.pencatat)+'</b></div>'
+    + (lembarKe < totalLembar ? '<div class="s-cut">--- potong di sini ---</div>' : '')
+    + '</div>'
+    + (lembarKe < totalLembar ? '<div class="struk-gap"></div>' : '');
+}
 function strukHTML(d, lembarKe, totalLembar){
   const c = kw();
+  if(c.ringkas && lembarKe > 1) return strukRingkasHTML(d, lembarKe, totalLembar);
   const wkt = d.waktu;
   const label = LEMBAR_LABEL[lembarKe-1] || ('LEMBAR '+lembarKe);
   const row = (k,v) => '<div class="s-row"><span class="k">'+k+'</span><span class="v">'+escAttr(v)+'</span></div>';
   return '<div class="struk">'
     + '<div class="s-kop">'
     +   (c.logo && LOGO_DATA ? '<img class="s-logo" src="'+LOGO_DATA+'" alt="" />' : '')
-    +   '<div class="s-nm">'+escAttr(c.lembaga)+'</div>'
-    +   (c.singkatan ? '<div class="s-sing">('+escAttr(c.singkatan)+')</div>' : '')
-    +   '<div class="s-al">'+escAttr(c.alamat)+'</div>'
+    +   '<div class="s-nm">'+escAttr(c.lembaga + (c.singkatan ? ' (' + c.singkatan + ')' : ''))+'</div>'
+    +   '<div class="s-al">'+escAttr(alamatRingkas(c.alamat))+'</div>'
     + '</div>'
     + '<div class="s-hr"></div>'
-    + '<div class="s-ttl">TANDA TERIMA</div>'
-    + '<div class="s-lbr">Lembar '+lembarKe+'/'+totalLembar+' \u00b7 '+label+'</div>'
+    + '<div class="s-ttl">TANDA TERIMA \u00b7 '+escAttr(label)+'</div>'
     + '<div class="s-hr2"></div>'
     + row('No', d.nomor)
-    + row('Tanggal', tglPendek(wkt))
-    + row('Hari', HARI_ID[wkt.getDay()])
-    + '<div class="s-hr2"></div>'
+    + row('Tgl', HARI_ID[wkt.getDay()] + ', ' + tglPendek(wkt))
     + row('Nama', d.nama)
-    + row('NIS/NIPD', d.nis || '\u2014')
-    + row('Kelas', d.kelas || '\u2014')
+    + row('NIS', (d.nis || '\u2014') + ' \u00b7 ' + (d.kelas || '\u2014'))
+    + row('Untuk', d.keterangan)
     + '<div class="s-hr2"></div>'
-    + '<div class="s-ket">Untuk pembayaran:<br/><b>'+escAttr(d.keterangan)+'</b></div>'
-    + '<div class="s-hr2"></div>'
-    + '<div class="s-tot"><div class="lb">JUMLAH BAYAR</div><div class="vl">'+rupiah(d.nominal)+'</div></div>'
+    + '<div class="s-tot"><div class="vl">'+rupiah(d.nominal)+'</div></div>'
     + '<div class="s-bil">'+escAttr(terbilangRupiah(d.nominal))+'</div>'
     + '<div class="s-lunas">LUNAS</div>'
     + '<div class="s-sign">'
@@ -2689,8 +2716,8 @@ function strukHTML(d, lembarKe, totalLembar){
     +   '<div class="nm2">'+escAttr(d.pencatat)+'</div>'
     + '</div>'
     + '<div class="s-hr"></div>'
-    + '<div class="s-foot">Simpan struk ini sebagai bukti pembayaran yang sah.<br/>Struk ini sah tanpa tanda tangan basah.<br/>Dicetak '+tglPendek(new Date())+'</div>'
-    + (lembarKe < totalLembar ? '<div class="s-cut">--- potong di sini ---</div>' : '<div class="s-foot" style="margin-top:3mm;">\u2014 terima kasih \u2014</div>')
+    + '<div class="s-foot">Simpan sebagai bukti pembayaran yang sah.</div>'
+    + (lembarKe < totalLembar ? '<div class="s-cut">--- potong di sini ---</div>' : '')
     + '</div>'
     + (lembarKe < totalLembar ? '<div class="struk-gap"></div>' : '');
 }
@@ -2783,6 +2810,7 @@ function cetakKwitansi(){
    ===================================================================== */
 const RAWBT_PKG = 'ru.a402d.rawbtprinter';
 const KOLOM = 32;                   /* 58 mm, Font A = 32 karakter */
+const KOLOM_KECIL = 42;             /* 58 mm, Font B = 42 karakter */
 const isAndroid = () => /android/i.test(navigator.userAgent);
 
 /* ---- teks aman untuk printer (huruf tunggal-bita) ---- */
@@ -2801,6 +2829,13 @@ function ascii(s){
     else out += '?';
   }
   return out;
+}
+function alamatRingkas(s){
+  return ascii(s)
+    .replace(/\bProvinsi\s+/gi,'').replace(/\bProv\.\s*/gi,'')
+    .replace(/\bKelurahan\s+/gi,'Kel. ').replace(/\bDesa\s+/gi,'Ds. ')
+    .replace(/\bKecamatan\s+/gi,'Kec. ').replace(/\bKabupaten\s+/gi,'Kab. ')
+    .replace(/\bKode\s+POS\s*/gi,'').replace(/\s+/g,' ').trim();
 }
 function wrapText(s, n){
   const words = ascii(s).split(/\s+/).filter(Boolean);
@@ -2825,11 +2860,12 @@ EscPos.prototype.align = function(n){ return this.raw([27,97,n]); };   /* 0 kiri
 EscPos.prototype.bold  = function(on){ return this.raw([27,69,on?1:0]); };
 EscPos.prototype.size  = function(w,h){ return this.raw([29,33,(((w||1)-1)<<4) | ((h||1)-1)]); };
 EscPos.prototype.feed  = function(n){ return this.raw([27,100,n]); };
-EscPos.prototype.rule  = function(ch){ return this.ln((ch||'-').repeat(KOLOM)); };
+EscPos.prototype.font  = function(n){ this.kecil = !!n; return this.raw([27,77,n?1:0]); };
+EscPos.prototype.rule  = function(ch){ const k=this.kecil; if(k) this.font(0); this.ln((ch||'-').repeat(KOLOM)); if(k) this.font(1); return this; };
 EscPos.prototype.b64   = function(s){ const bin = atob(s); for(let i=0;i<bin.length;i++) this.b.push(bin.charCodeAt(i)); return this; };
-EscPos.prototype.para  = function(s){ for(const l of wrapText(s, KOLOM)) this.ln(l); return this; };
+EscPos.prototype.para  = function(s, cols){ for(const l of wrapText(s, cols || (this.kecil ? KOLOM_KECIL : KOLOM))) this.ln(l); return this; };
 EscPos.prototype.row   = function(k, v){
-  const lbl = (ascii(k) + '        ').slice(0,8) + ' : ';
+  const lbl = (ascii(k) + '     ').slice(0,5) + ' : ';
   const lebar = KOLOM - lbl.length;
   const baris = wrapText(v, lebar);
   this.ln(lbl + baris[0]);
@@ -2843,51 +2879,61 @@ function bytesToB64(arr){
 }
 
 /* ---- satu lembar struk dalam ESC/POS ---- */
+function escposRingkas(e, d, lembarKe, totalLembar){
+  const c = kw();
+  const wkt = d.waktu;
+  const label = LEMBAR_LABEL[lembarKe-1] || ('LEMBAR ' + lembarKe);
+  e.init().align(1);
+  e.bold(true).ln(ascii(c.singkatan || 'MDIIA') + ' - ' + label).bold(false);
+  e.bold(true).size(1,2).ln(ascii(d.nomor)).size(1,1).bold(false);
+  e.ln(tglPendek(wkt));
+  e.align(0).rule('-');
+  e.bold(true).para(d.nama).bold(false);
+  e.ln(ascii(String(d.nis||'-')) + ' - ' + ascii(d.kelas||'-'));
+  e.para(d.keterangan);
+  e.rule('-');
+  e.align(1).bold(true).size(2,2).ln(rupiah(d.nominal)).size(1,1).bold(false);
+  e.align(0).rule('-');
+  e.ln('Diterima: ' + ascii(d.pencatat));
+  if(lembarKe < totalLembar) e.align(1).feed(1).ln('- - - potong di sini - - -').feed(2);
+  else e.feed(4);
+  e.align(0).init();
+  return e;
+}
 function escposStruk(e, d, lembarKe, totalLembar){
   const c = kw();
+  if(c.ringkas && lembarKe > 1) return escposRingkas(e, d, lembarKe, totalLembar);
   const wkt = d.waktu;
   const label = LEMBAR_LABEL[lembarKe-1] || ('LEMBAR ' + lembarKe);
 
   e.init().align(1);
-  if(c.logo && typeof LOGO_ESC === 'string' && LOGO_ESC) e.b64(LOGO_ESC).ln();
-  e.bold(true).para(c.lembaga).bold(false);
-  if(c.singkatan) e.ln('(' + ascii(c.singkatan) + ')');
-  e.para(c.alamat);
+  if(c.logo && typeof LOGO_ESC === 'string' && LOGO_ESC) e.b64(LOGO_ESC);
+  e.bold(true).para(c.lembaga + (c.singkatan ? ' (' + c.singkatan + ')' : '')).bold(false);
+  e.font(1).para(alamatRingkas(c.alamat)).font(0);
   e.rule('=');
-  e.bold(true).ln('TANDA TERIMA').bold(false);
-  e.ln('Lembar ' + lembarKe + '/' + totalLembar + ' - ' + label);
+  e.bold(true).ln('TANDA TERIMA \u00b7 ' + label).bold(false);
   e.align(0).rule('-');
   e.row('No', d.nomor);
-  e.row('Tanggal', tglPendek(wkt));
-  e.row('Hari', HARI_ID[wkt.getDay()]);
-  e.rule('-');
+  e.row('Tgl', HARI_ID[wkt.getDay()] + ', ' + tglPendek(wkt));
   e.row('Nama', d.nama);
-  e.row('NIS/NIPD', d.nis || '-');
-  e.row('Kelas', d.kelas || '-');
+  e.row('NIS', (d.nis || '-') + ' - ' + (d.kelas || '-'));
+  e.row('Untuk', d.keterangan);
   e.rule('-');
-  e.ln('Untuk pembayaran:');
-  e.bold(true).para(d.keterangan).bold(false);
-  e.rule('-');
-  e.align(1).ln('JUMLAH BAYAR');
-  e.bold(true).size(2,2).ln(rupiah(d.nominal)).size(1,1).bold(false);
+  e.align(1).bold(true).size(2,2).ln(rupiah(d.nominal)).size(1,1).bold(false);
   e.para(terbilangRupiah(d.nominal));
-  e.rule('-');
   e.bold(true).size(1,2).ln('L U N A S').size(1,1).bold(false);
   e.rule('-');
   e.align(2);
   e.ln(ascii(c.kota) + ', ' + tglPanjang(wkt));
   e.ln(ascii(c.jabatan || 'Penerima') + ',');
-  e.ln().ln().ln();
+  e.ln().ln();
   e.bold(true).ln(ascii(d.pencatat)).bold(false);
-  e.ln('(' + '-'.repeat(Math.max(8, ascii(d.pencatat).length)) + ')');
   e.align(1).rule('-');
-  e.para('Simpan struk ini sebagai bukti pembayaran yang sah.');
-  e.para('Sah tanpa tanda tangan basah.');
-  e.ln('Dicetak ' + tglPendek(new Date()));
+  e.font(1).ln('Simpan sebagai bukti pembayaran yang sah.').font(0);
   if(lembarKe < totalLembar){
-    e.feed(1).ln('- - - potong di sini - - -').feed(2);
+    e.ln('- - - potong di sini - - -').feed(2);
   } else {
-    e.ln().ln('-- terima kasih --').feed(4);
+    e.feed(4);
   }
   e.align(0).init();
   return e;
@@ -2935,6 +2981,7 @@ function renderKwitansiSetting(){
   $('#setAlamat').value    = c.alamat;
   $('#setKota').value      = c.kota;
   $('#setRangkap').value   = String(c.rangkap);
+  $('#setRingkas').checked = !!c.ringkas;
   $('#setLogo').checked    = !!c.logo;
   $('#setStempel').checked = !!c.stempel;
 }
@@ -4314,6 +4361,7 @@ bindKw('#setSingkatan','singkatan');
 bindKw('#setAlamat','alamat');
 bindKw('#setKota','kota');
 bindKw('#setRangkap','rangkap','int');
+bindKw('#setRingkas','ringkas','check');
 bindKw('#setLogo','logo','check');
 bindKw('#setStempel','stempel','check');
 
